@@ -1,0 +1,10 @@
+module wyzwanie 24 - aplikacja pogodowa{
+    requires javafx.fxml;
+    requires javafx.graphics;
+    requires javafx.controls;
+    requires javafx.web;
+
+    opens main;
+    opens main.java;
+    opens main.java.pl.kamilszela;
+}

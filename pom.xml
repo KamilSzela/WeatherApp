@@ -8,7 +8,6 @@
     <artifactId>PogodaNaLato</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-
     <dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>
@@ -74,6 +73,15 @@
                 <configuration>
                     <source>11</source>
                     <target>11</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.4</version>
+                <configuration>
+                    <mainClass>pl.kamilszela.Launcher</mainClass>
                 </configuration>
             </plugin>
 
