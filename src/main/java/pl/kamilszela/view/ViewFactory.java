@@ -4,14 +4,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import pl.kamilszela.AppManager;
 import pl.kamilszela.controller.MainWindowController;
 
 import java.io.IOException;
 
 public class ViewFactory {
 
+    public AppManager appManager = new AppManager();
+
     public void showMainWindow(){
-        MainWindowController controller = new MainWindowController();
+        MainWindowController controller = new MainWindowController(appManager);
 
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/mainWindow.fxml"));
         loader.setController(controller);

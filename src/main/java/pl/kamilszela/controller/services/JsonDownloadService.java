@@ -2,6 +2,7 @@ package pl.kamilszela.controller.services;
 
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import pl.kamilszela.AppManager;
 import pl.kamilszela.Config;
 import pl.kamilszela.controller.JsonDownloadResult;
 
@@ -13,21 +14,23 @@ import java.net.URL;
 
 public class JsonDownloadService extends Service {
 
-    private String cityName;
+    public String cityName;
+    public AppManager appManager;
+    public String downloadedJson;
 
-    public String getCityName() {
-        return cityName;
+    public JsonDownloadService(AppManager appManager){
+        this.appManager = appManager;
     }
 
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
+    public void setAppManager(AppManager appManager) {
+        this.appManager = appManager;
     }
 
     @Override
-    protected Task createTask() {
-        return new Task() {
+    protected Task<JsonDownloadResult> createTask() {
+        return new Task<JsonDownloadResult>() {
             @Override
-            protected Object call() throws Exception {
+            protected JsonDownloadResult call() throws Exception {
                 try{
                     URL url = new URL("http://api.openweathermap.org/data/2" +
                             ".5/forecast?q=" + cityName + "&units=metric&appid=" + Config.key);
@@ -43,8 +46,7 @@ public class JsonDownloadService extends Service {
                         }
                     }
                     reader.close();
-                    System.out.println(resultBuilder.toString());
-                    return JsonDownloadResult.SUCCESS;
+                    downloadedJson = resultBuilder.toString();
                 } catch (MalformedURLException e){
                     e.printStackTrace();
                     return JsonDownloadResult.FAILED_BY_MALFORMED_URL;
@@ -53,7 +55,16 @@ public class JsonDownloadService extends Service {
                     e.printStackTrace();
                     return JsonDownloadResult.FAILED_BY_UNEXPECTED_ERROR;
                 }
+                return JsonDownloadResult.SUCCESS;
             }
         };
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 }
