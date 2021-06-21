@@ -12,6 +12,8 @@ import pl.kamilszela.view.ViewFactory;
  */
 public class Launcher extends Application {
 
+    public AppManager appManager = new AppManager();
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -20,7 +22,7 @@ public class Launcher extends Application {
 
 //        stage.setScene(new Scene(new Pane(), 300, 300));
 //        stage.show();
-        ViewFactory viewFactory = new ViewFactory();
+        ViewFactory viewFactory = new ViewFactory(appManager);
         viewFactory.showMainWindow();
 
     }

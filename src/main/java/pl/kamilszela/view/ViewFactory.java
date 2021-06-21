@@ -11,7 +11,11 @@ import java.io.IOException;
 
 public class ViewFactory {
 
-    public AppManager appManager = new AppManager();
+    public AppManager appManager;
+
+    public ViewFactory(AppManager appManager) {
+        this.appManager = appManager;
+    }
 
     public void showMainWindow(){
         MainWindowController controller = new MainWindowController(appManager);
