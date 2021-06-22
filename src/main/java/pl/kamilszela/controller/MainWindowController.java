@@ -16,9 +16,9 @@ import java.util.ResourceBundle;
 public class MainWindowController implements Initializable {
 
     public AppManager appManager;
-    private CurrentTownJsonDownloadService currentTownJsonDownloadService =
+    private JsonDownloadService currentTownJsonDownloadService =
             new CurrentTownJsonDownloadService(appManager);
-    private DestinationTownJsonDownloadService destinationTownJsonDownloadService =
+    private JsonDownloadService destinationTownJsonDownloadService =
             new DestinationTownJsonDownloadService(appManager);
 
     @FXML
@@ -49,12 +49,10 @@ public class MainWindowController implements Initializable {
     }
 
     public void downloadCurrentTownForcast(){
-        downloadForecast((JsonDownloadService) currentTownJsonDownloadService, sourceTown.getText());
-        System.out.println(appManager.getCurrentTownForcastJson());
+        downloadForecast(currentTownJsonDownloadService, sourceTown.getText());
     }
     public void downloadDestinationTownForcast(){
-        downloadForecast((JsonDownloadService) destinationTownJsonDownloadService, destinationTown.getText());
-        System.out.println(appManager.getDestinationTownForcastJson());
+        downloadForecast(destinationTownJsonDownloadService, destinationTown.getText());
     }
     public void downloadForecast(JsonDownloadService service, String cityName){
         service.setCityName(cityName);
@@ -62,13 +60,25 @@ public class MainWindowController implements Initializable {
         service.restart();
 
         service.setOnSucceeded(e -> {
-            service.setForecastInAppManager();
+            JsonDownloadResult result = (JsonDownloadResult) service.getValue();
+            switch (result){
+                case SUCCESS:
+                    service.setForecastInAppManager();
+                    return;
+                case FAILED_BY_MALFORMED_URL:
+                    this.errorLabel.setText("Znaleziono błąd w adresie URL");
+                    return;
+                case FAILED_BY_UNEXPECTED_ERROR:
+                    this.errorLabel.setText("Wystapił niespodziewany błąd");
+                    return;
+            }
         });
+
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        currentTownJsonDownloadService.start();
-        destinationTownJsonDownloadService.start();
+        this.sourceTown.setText("London");
+        this.destinationTown.setText("Paris");
     }
 }

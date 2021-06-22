@@ -24,6 +24,7 @@ public abstract class JsonDownloadService extends Service {
 
     public void setAppManager(AppManager appManager) {
         this.appManager = appManager;
+        this.downloadedJson = new String();
     }
 
     @Override
@@ -61,6 +62,10 @@ public abstract class JsonDownloadService extends Service {
     }
 
     public void setForecastInAppManager(){}
+
+    public String getDownloadedJson(){
+        return this.downloadedJson;
+    }
 
     public String getCityName() {
         return cityName;
