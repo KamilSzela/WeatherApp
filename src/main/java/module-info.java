@@ -2,6 +2,7 @@ module PogodaNaLato {
     requires javafx.controls;
     requires javafx.graphics;
     requires javafx.fxml;
+    requires javafx.web;
     requires com.google.gson;
 
     opens pl.kamilszela;

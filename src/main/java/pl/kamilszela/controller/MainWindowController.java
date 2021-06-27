@@ -64,6 +64,7 @@ public class MainWindowController implements Initializable {
             switch (result){
                 case SUCCESS:
                     service.setForecastInAppManager();
+                    appManager.setParametersInWeatherCityModel();
                     return;
                 case FAILED_BY_MALFORMED_URL:
                     this.errorLabel.setText("Znaleziono błąd w adresie URL");
