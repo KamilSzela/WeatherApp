@@ -35,18 +35,17 @@ public class AppManager {
     }
 
     public void setParametersInWeatherCityModel(){
+        if(currentCityWeatherModelList.size() > 0 && destinationCityWeatherModelList.size() > 0){
+            currentCityWeatherModelList.clear();
+            destinationCityWeatherModelList.clear();
+        }
+
         if(currentTownForcastJson != null && currentCityWeatherModelList.size() == 0){
             setUpListWithPredictionModel(currentCityWeatherModelList, currentTownForcastJson);
         } else if (destinationTownForcastJson != null && destinationCityWeatherModelList.size() == 0){
             setUpListWithPredictionModel(destinationCityWeatherModelList, destinationTownForcastJson);
-        } else if (currentCityWeatherModelList.size() > 0 && destinationCityWeatherModelList.size() > 0){
-            currentCityWeatherModelList.clear();
-            destinationCityWeatherModelList.clear();
-            setUpListWithPredictionModel(currentCityWeatherModelList, currentTownForcastJson);
-            setUpListWithPredictionModel(destinationCityWeatherModelList, destinationTownForcastJson);
         }
-        System.out.println("miast przebywania: " + currentCityWeatherModelList.size());
-        System.out.println("docelowe miasto; " + destinationCityWeatherModelList.size());
+
     }
     public void setUpListWithPredictionModel(List<WeatherCityModel> list, String forecastJson){
         Gson gson = new Gson();
@@ -65,6 +64,6 @@ public class AppManager {
             model.setDt_txt((String) prediction.get("dt_txt"));
             list.add(model);
         }
-
+        forecastJson = null;
     }
 }

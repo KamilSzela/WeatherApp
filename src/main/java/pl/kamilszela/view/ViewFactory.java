@@ -18,7 +18,7 @@ public class ViewFactory {
     }
 
     public void showMainWindow(){
-        MainWindowController controller = new MainWindowController(appManager);
+        MainWindowController controller = new MainWindowController(appManager, this);
 
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/mainWindow.fxml"));
         loader.setController(controller);
@@ -37,4 +37,8 @@ public class ViewFactory {
         stage.show();
     }
 
+    public void prepareForecastPanel() {
+        System.out.println(this.appManager.destinationCityWeatherModelList.size());
+        System.out.println(this.appManager.currentCityWeatherModelList.size());
+    }
 }
