@@ -4,14 +4,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import pl.kamilszela.AppManager;
 import pl.kamilszela.controller.services.CurrentTownJsonDownloadService;
 import pl.kamilszela.controller.services.DestinationTownJsonDownloadService;
 import pl.kamilszela.controller.services.JsonDownloadService;
+import pl.kamilszela.model.WeatherCityModel;
 import pl.kamilszela.view.ViewFactory;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainWindowController implements Initializable {
@@ -46,6 +49,7 @@ public class MainWindowController implements Initializable {
     @FXML
     public void generateForcastAction() {
         if(sourceTown.getText() != "" && destinationTown.getText() != ""){
+            clearForecastFields();
             downloadCurrentTownForcast();
             downloadDestinationTownForcast();
         }
@@ -82,27 +86,51 @@ public class MainWindowController implements Initializable {
 
     }
     public void prepareForecastPanel(){
+        int counter = 0;
+        int size = appManager.currentCityWeatherModelList.size();
         if(appManager.currentCityWeatherModelList.size() > 0 && appManager.destinationCityWeatherModelList.size() > 0){
-            System.out.println("current town" + appManager.currentCityWeatherModelList.size());
-            System.out.println("destination town" + appManager.destinationCityWeatherModelList.size());
-            String dateTime = appManager.destinationCityWeatherModelList.get(0).getDt_txt();
-            Label labelTimeDestination = new Label(dateTime);
-            destinationForcastField.getChildren().add(labelTimeDestination);
-            Double tempDestination = appManager.destinationCityWeatherModelList.get(0).getMain().get("temp");
-            Label tempLabeldest = new Label(tempDestination.toString());
-            destinationForcastField.getChildren().add(tempLabeldest);
-
-            String dateTimeCurr = appManager.currentCityWeatherModelList.get(0).getDt_txt();
-            Label labelTimeCurr = new Label(dateTime);
-            sourceTownForcastField.getChildren().add(labelTimeCurr);
-            Double tempCurr = appManager.currentCityWeatherModelList.get(0).getMain().get("temp");
-            Label tempLabelCurr = new Label(tempCurr.toString());
-            sourceTownForcastField.getChildren().add(tempLabelCurr);
+            for(int i = 0; i < size; i++){
+                if(counter == 8){
+                    showPrecastInVBox(i,  appManager.destinationCityWeatherModelList, destinationForcastField);
+                    showPrecastInVBox(i,  appManager.currentCityWeatherModelList, sourceTownForcastField);
+                    counter = 0;
+                }
+                counter++;
+                if(i == 38){
+                    counter++;
+                }
+            }
         }
     }
+    public void showPrecastInVBox(int i, List< WeatherCityModel> list, Pane forecastField){
+        String dateTime = list.get(i).getDt_txt();
+        Label labelTimeDestination = new Label(dateTime);
+        Double tempDestination = list.get(i).getMain().get("temp");
+        Label tempLabeldest = new Label(tempDestination.toString());
+        VBox innerBox = new VBox();
+        innerBox.getChildren().addAll(labelTimeDestination,tempLabeldest);
+        forecastField.getChildren().add(innerBox);
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.sourceTown.setText("London");
         this.destinationTown.setText("Paris");
+        setUpPrecastFields();
+    }
+
+    private void setUpPrecastFields() {
+        sourceTown.setOnMouseClicked(e ->{
+            clearForecastFields();
+        });
+        destinationTown.setOnMouseClicked(e -> {
+            clearForecastFields();
+        });
+    }
+
+    private void clearForecastFields() {
+        destinationForcastField.getChildren().clear();
+        sourceTownForcastField.getChildren().clear();
     }
 }
