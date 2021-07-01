@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<AnchorPane prefHeight="139.0" prefWidth="278.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="iconBox" fitHeight="77.0" fitWidth="80.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+      <VBox layoutX="100.0" prefHeight="140.0" prefWidth="87.0" spacing="10.0">
+         <children>
+            <Label text="Temperatura" />
+            <Label text="Ciśnienie" />
+            <Label prefHeight="17.0" prefWidth="60.0" text="Wilgotność" />
+            <Label text="Wiatr" />
+            <Label text="Data" />
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </VBox>
+      <VBox layoutX="178.0" prefHeight="140.0" prefWidth="99.0" spacing="10.0">
+         <children>
+            <Label fx:id="temperatureLabel" text="temp" />
+            <Label fx:id="pressureLabel" text="cis" />
+            <Label fx:id="humidityLabel" text="wilg" />
+            <Label fx:id="windLabel" text="wiatr" />
+            <Label fx:id="dateLabel" text="data" />
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>
