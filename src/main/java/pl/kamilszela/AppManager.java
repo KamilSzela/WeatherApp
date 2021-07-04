@@ -53,6 +53,7 @@ public class AppManager {
                 Object>>(){}.getType());
         ArrayList<Object> weatherForcastList = (ArrayList<Object>) forecastConvertedToMap.get("list");
         Map<String, Object> cityData = (Map<String, Object>) forecastConvertedToMap.get("city");
+        //System.out.println(cityData.get("name"));
 
         for(int i = 0; i < weatherForcastList.size(); i++){
             Map prediction = (Map) weatherForcastList.get(i);
