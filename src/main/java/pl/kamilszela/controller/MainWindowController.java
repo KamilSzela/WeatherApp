@@ -47,6 +47,7 @@ public class MainWindowController extends BaseController implements Initializabl
     public void generateForcastAction() {
         if(sourceTown.getText() != "" && destinationTown.getText() != ""){
             clearForecastFields();
+            appManager.clearJsonForecast();
             downloadCurrentTownForcast();
             downloadDestinationTownForcast();
         }

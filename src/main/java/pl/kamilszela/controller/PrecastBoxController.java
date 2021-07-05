@@ -3,6 +3,7 @@ package pl.kamilszela.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import pl.kamilszela.AppManager;
 import pl.kamilszela.model.WeatherCityModel;
@@ -42,6 +43,11 @@ public class PrecastBoxController extends BaseController implements Initializabl
         humidityLabel.setText(humidity.toString() + "%");
         Double windSpeed = list.get(i).getWind().get("speed");
         windLabel.setText(windSpeed.toString() + " m/s");
+        String iconName = list.get(i).getWeather().get("icon");
+        String path = "/icons/" + iconName + ".png";
+        //String path = "/icons/50d.png";
+        Image icon = new Image(String.valueOf(this.getClass().getResource(path)));
+        iconBox.setImage(icon);
     }
 
     @Override
