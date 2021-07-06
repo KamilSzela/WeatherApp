@@ -49,7 +49,22 @@ public class PrecastBoxController extends BaseController implements Initializabl
         Image icon = new Image(String.valueOf(this.getClass().getResource(path)));
         iconBox.setImage(icon);
     }
-
+    public void showForecastForOneDay(List<WeatherCityModel> list, int i ){
+        String dateTime = list.get(i).getDt_txt();
+        String date = dateTime.substring(0,10);
+        for(int k = 0; k < list.size(); k++){
+            String dateOFSingleRecord = list.get(k).getDt_txt();
+            String dateForComparision = dateOFSingleRecord.substring(0,10);
+            if(date.equals(dateForComparision)){
+                Double temperature = list.get(k).getMain().get("temp");
+                Double pressure = list.get(k).getMain().get("pressure");
+                Double humidity = list.get(k).getMain().get("humidity");
+                Double windSpeed = list.get(k).getWind().get("speed");
+                String dateForDisplay = list.get(k).getDt_txt();
+                System.out.println(dateForDisplay + " " + temperature + "C " + pressure + " hPa " + humidity + " %" + windSpeed );
+            }
+        }
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

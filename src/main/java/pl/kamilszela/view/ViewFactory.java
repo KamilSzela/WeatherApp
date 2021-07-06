@@ -74,6 +74,9 @@ public class ViewFactory {
             ioException.printStackTrace();
         }
         controller.preparePrecastBox(i,list);
+        parent.setOnMouseClicked(e->{
+            controller.showForecastForOneDay(list, i);
+        });
         forecastField.getChildren().add(parent);
     }
 }
