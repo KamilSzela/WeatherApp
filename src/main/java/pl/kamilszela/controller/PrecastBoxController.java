@@ -5,6 +5,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseDragEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import pl.kamilszela.AppManager;
 import pl.kamilszela.model.WeatherCityModel;
 import pl.kamilszela.view.ViewFactory;
@@ -27,6 +31,8 @@ public class PrecastBoxController extends BaseController implements Initializabl
     private Label windLabel;
     @FXML
     private Label dateLabel;
+    @FXML
+    private AnchorPane forecastBox;
 
     public PrecastBoxController(AppManager appManager, ViewFactory viewFactory) {
         super(appManager, viewFactory);
@@ -65,8 +71,16 @@ public class PrecastBoxController extends BaseController implements Initializabl
             }
         }
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        forecastBox.setOnMouseEntered(e->{
+            System.out.println("mouse entered");
+            forecastBox.setStyle("-fx-background-color: silver");
+        });
+        forecastBox.setOnMouseExited(e->{
+            System.out.println("mouse exited");
+            forecastBox.setStyle("-fx-background-color: white;");
+        });
     }
 }

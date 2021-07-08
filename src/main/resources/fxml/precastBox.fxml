@@ -4,65 +4,80 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="91.0" prefWidth="225.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="forecastBox" prefHeight="91.0" prefWidth="225.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fx:id="iconBox" fitHeight="62.0" fitWidth="57.0" layoutX="7.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" />
-      <VBox layoutX="64.0" prefHeight="99.0" prefWidth="67.0" spacing="3.0">
+      <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Label prefHeight="9.0" prefWidth="57.0" text="Temperatura">
-               <font>
-                  <Font size="10.0" />
-               </font></Label>
-            <Label prefHeight="7.0" prefWidth="40.0" text="Ciśnienie">
-               <font>
-                  <Font size="10.0" />
-               </font></Label>
-            <Label prefHeight="17.0" prefWidth="60.0" text="Wilgotność">
-               <font>
-                  <Font size="10.0" />
-               </font></Label>
-            <Label prefHeight="8.0" prefWidth="24.0" text="Wiatr">
-               <font>
-                  <Font size="10.0" />
-               </font></Label>
-            <Label prefHeight="4.0" prefWidth="21.0" text="Data">
-               <font>
-                  <Font size="10.0" />
-               </font></Label>
+            <ImageView fx:id="iconBox" fitHeight="62.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true" />
+            <VBox prefHeight="99.0" prefWidth="67.0" spacing="3.0">
+               <children>
+                  <Label prefHeight="9.0" prefWidth="57.0" text="Temperatura">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="7.0" prefWidth="40.0" text="Ciśnienie">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="17.0" prefWidth="60.0" text="Wilgotność">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="8.0" prefWidth="24.0" text="Wiatr">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="4.0" prefWidth="21.0" text="Data">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </VBox>
+            <VBox prefHeight="100.0" prefWidth="70.0" spacing="3.0">
+               <children>
+                  <Label fx:id="temperatureLabel" text="temp">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="pressureLabel" text="cis">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="humidityLabel" text="wilg">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="windLabel" text="wiatr">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="dateLabel" text="data">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </VBox>
          </children>
-         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </padding>
-      </VBox>
-      <VBox layoutX="129.0" prefHeight="99.0" prefWidth="109.0" spacing="3.0">
-         <children>
-            <Label fx:id="temperatureLabel" text="temp">
-               <font>
-                  <Font size="10.0" />
-               </font></Label>
-            <Label fx:id="pressureLabel" text="cis">
-               <font>
-                  <Font size="10.0" />
-               </font></Label>
-            <Label fx:id="humidityLabel" text="wilg">
-               <font>
-                  <Font size="10.0" />
-               </font></Label>
-            <Label fx:id="windLabel" text="wiatr">
-               <font>
-                  <Font size="10.0" />
-               </font></Label>
-            <Label fx:id="dateLabel" text="data">
-               <font>
-                  <Font size="10.0" />
-               </font></Label>
-         </children>
-         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </padding>
-      </VBox>
+      </HBox>
    </children>
 </AnchorPane>

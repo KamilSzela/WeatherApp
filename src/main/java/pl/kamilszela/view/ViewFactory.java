@@ -74,6 +74,8 @@ public class ViewFactory {
             ioException.printStackTrace();
         }
         controller.preparePrecastBox(i,list);
+        parent.setStyle("-fx-cursor: hand;");
+
         parent.setOnMouseClicked(e->{
             controller.showForecastForOneDay(list, i);
         });
