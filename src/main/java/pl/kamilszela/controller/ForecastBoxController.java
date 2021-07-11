@@ -17,7 +17,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class PrecastBoxController extends BaseController implements Initializable {
+public class ForecastBoxController extends BaseController implements Initializable {
 
     @FXML
     private ImageView iconBox;
@@ -33,12 +33,14 @@ public class PrecastBoxController extends BaseController implements Initializabl
     private Label dateLabel;
     @FXML
     private AnchorPane forecastBox;
+    @FXML
+    private HBox forecastBoxInnerBox;
 
-    public PrecastBoxController(AppManager appManager, ViewFactory viewFactory) {
+    public ForecastBoxController(AppManager appManager, ViewFactory viewFactory) {
         super(appManager, viewFactory);
     }
 
-    public void preparePrecastBox(int i, List<WeatherCityModel> list){
+    public void prepareForecastBox(int i, List<WeatherCityModel> list){
         String dateTime = list.get(i).getDt_txt();
         dateLabel.setText(dateTime);
         Double temperature = list.get(i).getMain().get("temp");
@@ -51,36 +53,18 @@ public class PrecastBoxController extends BaseController implements Initializabl
         windLabel.setText(windSpeed.toString() + " m/s");
         String iconName = list.get(i).getWeather().get("icon");
         String path = "/icons/" + iconName + ".png";
-        //String path = "/icons/50d.png";
         Image icon = new Image(String.valueOf(this.getClass().getResource(path)));
         iconBox.setImage(icon);
-    }
-    public void showForecastForOneDay(List<WeatherCityModel> list, int i ){
-        String dateTime = list.get(i).getDt_txt();
-        String date = dateTime.substring(0,10);
-        for(int k = 0; k < list.size(); k++){
-            String dateOFSingleRecord = list.get(k).getDt_txt();
-            String dateForComparision = dateOFSingleRecord.substring(0,10);
-            if(date.equals(dateForComparision)){
-                Double temperature = list.get(k).getMain().get("temp");
-                Double pressure = list.get(k).getMain().get("pressure");
-                Double humidity = list.get(k).getMain().get("humidity");
-                Double windSpeed = list.get(k).getWind().get("speed");
-                String dateForDisplay = list.get(k).getDt_txt();
-                System.out.println(dateForDisplay + " " + temperature + "C " + pressure + " hPa " + humidity + " %" + windSpeed );
-            }
-        }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         forecastBox.setOnMouseEntered(e->{
-            System.out.println("mouse entered");
-            forecastBox.setStyle("-fx-background-color: silver");
+            forecastBoxInnerBox.setStyle("-fx-background-color: silver");
+            forecastBox.setStyle("-fx-cursor: hand;");
         });
         forecastBox.setOnMouseExited(e->{
-            System.out.println("mouse exited");
-            forecastBox.setStyle("-fx-background-color: white;");
+            forecastBoxInnerBox.setStyle("-fx-background-color: white;");
         });
     }
 }

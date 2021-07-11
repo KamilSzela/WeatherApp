@@ -87,10 +87,10 @@ public class MainWindowController extends BaseController implements Initializabl
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.sourceTown.setText("London");
         this.destinationTown.setText("Paris");
-        setUpPrecastFields();
+        setUpForecastFields();
     }
 
-    private void setUpPrecastFields() {
+    private void setUpForecastFields() {
         sourceTown.setOnMouseClicked(e ->{
             clearForecastFields();
         });
