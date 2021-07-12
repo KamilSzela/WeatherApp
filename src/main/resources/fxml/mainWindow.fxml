@@ -10,11 +10,11 @@
 
 <AnchorPane prefHeight="690.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <VBox fx:id="sourceTownForcastField" layoutY="128.0" maxHeight="-Infinity" prefHeight="510.0" prefWidth="260.0" AnchorPane.leftAnchor="0.0">
+        <VBox fx:id="sourceTownForcastField" layoutX="17.0" layoutY="128.0" maxHeight="-Infinity" prefHeight="510.0" prefWidth="240.0" AnchorPane.leftAnchor="20.0">
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding></VBox>
-        <VBox fx:id="destinationForcastField" layoutX="257.0" layoutY="131.0" maxHeight="-Infinity" prefHeight="510.0" prefWidth="260.0" AnchorPane.leftAnchor="257.0" AnchorPane.rightAnchor="1.0">
+        <VBox fx:id="destinationForcastField" layoutX="260.0" layoutY="128.0" maxHeight="-Infinity" prefHeight="510.0" prefWidth="240.0" AnchorPane.leftAnchor="260.0" AnchorPane.rightAnchor="20.0">
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding></VBox>

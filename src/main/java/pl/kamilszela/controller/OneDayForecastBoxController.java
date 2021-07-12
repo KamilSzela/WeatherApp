@@ -22,10 +22,10 @@ public class OneDayForecastBoxController extends BaseController implements Initi
 
     @FXML
     private VBox columnLeft;
-
     @FXML
     private VBox columnRight;
-
+    @FXML
+    private Label cityDataLabel;
     @FXML
     void closeForecastForOneDay() {
         Stage activeStage = (Stage) this.columnLeft.getScene().getWindow();
@@ -33,6 +33,10 @@ public class OneDayForecastBoxController extends BaseController implements Initi
     }
 
     public void fillColumnsWithForecastData(List<WeatherCityModel> list, int k, int counter){
+
+        String cityName = list.get(k).getCityData().get("name").toString();
+        String dateForDisplay = list.get(k).getDt_txt().substring(0,10);
+        cityDataLabel.setText(cityName + " " + dateForDisplay);
         if(counter > 4){
             viewFactory.showForecastInVBox(k, list, columnRight, false);
         } else {

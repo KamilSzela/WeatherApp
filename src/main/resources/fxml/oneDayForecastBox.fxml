@@ -6,16 +6,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="594.0" prefWidth="540.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="553.0" prefWidth="499.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox fx:id="columnLeft" layoutX="14.0" layoutY="47.0" prefHeight="500.0" prefWidth="250.0" />
-      <VBox fx:id="columnRight" layoutX="270.0" layoutY="47.0" prefHeight="500.0" prefWidth="250.0" />
-      <Button layoutX="241.0" layoutY="555.0" mnemonicParsing="false" onAction="#closeForecastForOneDay" text="Zamknij" />
-      <Label layoutX="185.0" layoutY="14.0" text="Prognoza na wybrany dzień">
+      <VBox fx:id="columnLeft" layoutX="14.0" layoutY="69.0" prefHeight="420.0" prefWidth="239.0" />
+      <VBox fx:id="columnRight" layoutX="253.0" layoutY="69.0" prefHeight="420.0" prefWidth="230.0" />
+      <Button layoutX="221.0" layoutY="514.0" mnemonicParsing="false" onAction="#closeForecastForOneDay" text="Zamknij" AnchorPane.leftAnchor="221.0" AnchorPane.rightAnchor="220.0" />
+      <Label layoutX="132.0" layoutY="14.0" text="Prognoza na wybrany dzień" AnchorPane.leftAnchor="132.0" AnchorPane.rightAnchor="132.0">
          <font>
-            <Font size="14.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
+      <Label fx:id="cityDataLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="164.0" layoutY="41.0" prefHeight="17.0" prefWidth="171.0" text="Label" textAlignment="CENTER" AnchorPane.leftAnchor="132.0" AnchorPane.rightAnchor="132.0" />
    </children>
 </AnchorPane>

@@ -18,6 +18,7 @@ public class AppManager {
     public List <WeatherCityModel> currentCityWeatherModelList = FXCollections.observableArrayList();
     public List <WeatherCityModel> destinationCityWeatherModelList = FXCollections.observableArrayList();
 
+
     public String getCurrentTownForcastJson() {
         return currentTownForcastJson;
     }
@@ -52,7 +53,6 @@ public class AppManager {
                 Object>>(){}.getType());
         ArrayList<Object> weatherForcastList = (ArrayList<Object>) forecastConvertedToMap.get("list");
         Map<String, Object> cityData = (Map<String, Object>) forecastConvertedToMap.get("city");
-        //System.out.println(cityData.get("name"));
 
         for(int i = 0; i < weatherForcastList.size(); i++){
             Map prediction = (Map) weatherForcastList.get(i);
@@ -62,6 +62,7 @@ public class AppManager {
             model.setWeather((Map<String, String>) weatherArrayList.get(0));
             model.setWind((Map<String, Double>) prediction.get("wind"));
             model.setDt_txt((String) prediction.get("dt_txt"));
+            model.setCityData(cityData);
             list.add(model);
         }
         forecastJson = null;

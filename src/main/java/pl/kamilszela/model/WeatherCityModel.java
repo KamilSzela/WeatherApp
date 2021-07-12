@@ -7,7 +7,7 @@ public class WeatherCityModel {
     Map<String, String> weather = null;
     Map<String, Double> wind = null;
     String dt_txt = null;
-
+    Map<String, Object> cityData = null;
 
     public Map<String, Double> getMain() {
         return main;
@@ -39,5 +39,13 @@ public class WeatherCityModel {
 
     public void setDt_txt(String dt_txt) {
         this.dt_txt = dt_txt;
+    }
+
+    public Map<String, Object> getCityData() {
+        return cityData;
+    }
+
+    public void setCityData(Map<String, Object> cityData) {
+        this.cityData = cityData;
     }
 }
