@@ -36,8 +36,7 @@ public class AppManager {
 
     public void setParametersInWeatherCityModel(){
         if(currentCityWeatherModelList.size() > 0 && destinationCityWeatherModelList.size() > 0){
-            currentCityWeatherModelList.clear();
-            destinationCityWeatherModelList.clear();
+            clearListsOfWeatherForecast();
         }
 
         if(currentTownForcastJson != null && currentCityWeatherModelList.size() == 0){
@@ -53,6 +52,7 @@ public class AppManager {
                 Object>>(){}.getType());
         ArrayList<Object> weatherForcastList = (ArrayList<Object>) forecastConvertedToMap.get("list");
         Map<String, Object> cityData = (Map<String, Object>) forecastConvertedToMap.get("city");
+        //System.out.println(cityData.get("name"));
 
         for(int i = 0; i < weatherForcastList.size(); i++){
             Map prediction = (Map) weatherForcastList.get(i);
@@ -65,5 +65,14 @@ public class AppManager {
             list.add(model);
         }
         forecastJson = null;
+    }
+    public void clearJsonForecast(){
+        currentTownForcastJson = null;
+        destinationTownForcastJson = null;
+    }
+
+    public void clearListsOfWeatherForecast(){
+        currentCityWeatherModelList.clear();
+        destinationCityWeatherModelList.clear();
     }
 }

@@ -17,10 +17,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class MainWindowController implements Initializable {
+public class MainWindowController extends BaseController implements Initializable {
 
-    public AppManager appManager;
-    public ViewFactory viewFactory;
     private JsonDownloadService currentTownJsonDownloadService =
             new CurrentTownJsonDownloadService(appManager);
     private JsonDownloadService destinationTownJsonDownloadService =
@@ -42,14 +40,14 @@ public class MainWindowController implements Initializable {
     private Label errorLabel;
 
     public MainWindowController(AppManager appManager, ViewFactory viewFactory){
-        this.appManager = appManager;
-        this.viewFactory = viewFactory;
+        super(appManager, viewFactory);
     }
 
     @FXML
     public void generateForcastAction() {
         if(sourceTown.getText() != "" && destinationTown.getText() != ""){
             clearForecastFields();
+            appManager.clearJsonForecast();
             downloadCurrentTownForcast();
             downloadDestinationTownForcast();
         }
@@ -72,8 +70,7 @@ public class MainWindowController implements Initializable {
                 case SUCCESS:
                     service.setForecastInAppManager();
                     appManager.setParametersInWeatherCityModel();
-                    prepareForecastPanel();
-                    //viewFactory.prepareForecastPanel();
+                    viewFactory.prepareForecastPanel(destinationForcastField, sourceTownForcastField);
                     return;
                 case FAILED_BY_MALFORMED_URL:
                     this.errorLabel.setText("Znaleziono błąd w adresie URL");
@@ -85,42 +82,15 @@ public class MainWindowController implements Initializable {
         });
 
     }
-    public void prepareForecastPanel(){
-        int counter = 0;
-        int size = appManager.currentCityWeatherModelList.size();
-        if(appManager.currentCityWeatherModelList.size() > 0 && appManager.destinationCityWeatherModelList.size() > 0){
-            for(int i = 0; i < size; i++){
-                if(counter == 8){
-                    showPrecastInVBox(i,  appManager.destinationCityWeatherModelList, destinationForcastField);
-                    showPrecastInVBox(i,  appManager.currentCityWeatherModelList, sourceTownForcastField);
-                    counter = 0;
-                }
-                counter++;
-                if(i == 38){
-                    counter++;
-                }
-            }
-        }
-    }
-    public void showPrecastInVBox(int i, List< WeatherCityModel> list, Pane forecastField){
-        String dateTime = list.get(i).getDt_txt();
-        Label labelTimeDestination = new Label(dateTime);
-        Double tempDestination = list.get(i).getMain().get("temp");
-        Label tempLabeldest = new Label(tempDestination.toString());
-        VBox innerBox = new VBox();
-        innerBox.getChildren().addAll(labelTimeDestination,tempLabeldest);
-        forecastField.getChildren().add(innerBox);
-
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.sourceTown.setText("London");
         this.destinationTown.setText("Paris");
-        setUpPrecastFields();
+        setUpForecastFields();
     }
 
-    private void setUpPrecastFields() {
+    private void setUpForecastFields() {
         sourceTown.setOnMouseClicked(e ->{
             clearForecastFields();
         });
