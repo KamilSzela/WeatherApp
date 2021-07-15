@@ -25,23 +25,11 @@ public class ViewFactory {
 
     public void showMainWindow(){
         BaseController controller = new MainWindowController(appManager, this);
+        String fileName = "/fxml/mainWindow.fxml";
 
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/mainWindow.fxml"));
-        loader.setController(controller);
+        Parent parent = loadFXMLFile(controller, fileName);
 
-        Parent parent = null;
-
-        try {
-            parent = loader.load();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
-        Scene scene = new Scene(parent);
-        Stage stage = new Stage();
-        stage.setTitle("Pogoda na lato");
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.show();
+        showStage("Pogoda na lato", parent, false, false);
     }
 
     public void prepareForecastPanel(Pane destinationForecastField, Pane sourceTownForecastField) {
@@ -50,8 +38,8 @@ public class ViewFactory {
         if(appManager.currentCityWeatherModelList.size() > 0 && appManager.destinationCityWeatherModelList.size() > 0){
             for(int i = 0; i < size; i++){
                 if(counter == 8){
-                    showForecastInVBox(i,  appManager.destinationCityWeatherModelList, destinationForecastField);
-                    showForecastInVBox(i,  appManager.currentCityWeatherModelList, sourceTownForecastField);
+                    showForecastInVBox(i,  appManager.destinationCityWeatherModelList, destinationForecastField, true);
+                    showForecastInVBox(i,  appManager.currentCityWeatherModelList, sourceTownForecastField, true);
                     counter = 0;
                 }
                 counter++;
@@ -62,49 +50,59 @@ public class ViewFactory {
         }
     }
 
-    private void showForecastInVBox(int i, List<WeatherCityModel> list, Pane forecastField) {
+    public void showForecastInVBox(int i, List<WeatherCityModel> list, Pane forecastField,
+                                    boolean clickForOneDayForecast) {
         ForecastBoxController controller = new ForecastBoxController(this.appManager, this);
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/forecastBox.fxml"));
-        loader.setController(controller);
-        Parent parent = null;
-        try{
-            parent = loader.load();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
+        String fileName = "/fxml/forecastBox.fxml";
+        Parent parent = loadFXMLFile(controller, fileName);
         controller.prepareForecastBox(i,list);
-
-        parent.setOnMouseClicked(e->{
-            showForecastForOneDay(list, i);
-        });
+        if(clickForOneDayForecast){
+            parent.setOnMouseClicked(e->{
+                showForecastForOneDay(list, i);
+            });
+        }
         forecastField.getChildren().add(parent);
     }
 
     private void showForecastForOneDay(List<WeatherCityModel> list, int i){
         OneDayForecastBoxController controller = new OneDayForecastBoxController(this.appManager, this);
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/oneDayForecastBox.fxml"));
-        loader.setController(controller);
-        Parent parent = null;
-        try{
-            parent = loader.load();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
+        String fileName = "/fxml/oneDayForecastBox.fxml";
+        Parent parent = loadFXMLFile(controller, fileName);
 
         String dateTime = list.get(i).getDt_txt();
         String date = dateTime.substring(0,10);
+        int counter = 0;
         for(int k = 0; k < list.size(); k++){
             String dateOFSingleRecord = list.get(k).getDt_txt();
             String dateForComparision = dateOFSingleRecord.substring(0,10);
             if(date.equals(dateForComparision)){
-                controller.fillColumnsWithFoecastData(list, k);
+                counter++;
+                controller.fillColumnsWithForecastData(list, k, counter);
             }
         }
+        showStage("Pogoda na wybrany dzień", parent, false, true);
+    }
+
+    private void showStage(String title, Parent parent, boolean resiable, boolean onTop){
         Scene scene = new Scene(parent);
         Stage stage = new Stage();
-        stage.setTitle("Prognoza na jeden dzień");
-        stage.setResizable(false);
+        stage.setTitle(title);
+        stage.setResizable(resiable);
+        stage.setAlwaysOnTop(onTop);
         stage.setScene(scene);
         stage.show();
+    }
+
+    private Parent loadFXMLFile(BaseController controller, String fileName){
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource(fileName));
+        loader.setController(controller);
+        Parent parent = null;
+        try{
+            parent = loader.load();
+
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+        return parent;
     }
 }

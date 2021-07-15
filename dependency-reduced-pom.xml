@@ -19,7 +19,7 @@
         <artifactId>javafx-maven-plugin</artifactId>
         <version>0.0.4</version>
         <configuration>
-          <mainClass>pl.kamilszela.Launcher</mainClass>
+          <mainClass>pl.kamilszela.Runner</mainClass>
         </configuration>
       </plugin>
       <plugin>

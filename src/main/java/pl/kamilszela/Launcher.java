@@ -1,9 +1,6 @@
 package pl.kamilszela;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import pl.kamilszela.view.ViewFactory;
 
@@ -19,9 +16,6 @@ public class Launcher extends Application {
     }
     @Override
     public void start(Stage stage) throws Exception {
-
-//        stage.setScene(new Scene(new Pane(), 300, 300));
-//        stage.show();
         ViewFactory viewFactory = new ViewFactory(appManager);
         viewFactory.showMainWindow();
 
