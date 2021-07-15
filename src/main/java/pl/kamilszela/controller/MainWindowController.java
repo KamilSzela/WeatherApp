@@ -4,17 +4,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import pl.kamilszela.AppManager;
 import pl.kamilszela.controller.services.CurrentTownJsonDownloadService;
 import pl.kamilszela.controller.services.DestinationTownJsonDownloadService;
 import pl.kamilszela.controller.services.JsonDownloadService;
-import pl.kamilszela.model.WeatherCityModel;
 import pl.kamilszela.view.ViewFactory;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainWindowController extends BaseController implements Initializable {

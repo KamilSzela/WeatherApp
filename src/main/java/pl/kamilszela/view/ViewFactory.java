@@ -29,12 +29,7 @@ public class ViewFactory {
 
         Parent parent = loadFXMLFile(controller, fileName);
 
-        Scene scene = new Scene(parent);
-        Stage stage = new Stage();
-        stage.setTitle("Pogoda na lato");
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.show();
+        showStage("Pogoda na lato", parent, false, false);
     }
 
     public void prepareForecastPanel(Pane destinationForecastField, Pane sourceTownForecastField) {
@@ -85,11 +80,15 @@ public class ViewFactory {
                 controller.fillColumnsWithForecastData(list, k, counter);
             }
         }
+        showStage("Pogoda na wybrany dzień", parent, false, true);
+    }
+
+    private void showStage(String title, Parent parent, boolean resiable, boolean onTop){
         Scene scene = new Scene(parent);
         Stage stage = new Stage();
-        stage.setTitle("Prognoza na jeden dzień");
-        stage.setResizable(false);
-        stage.setAlwaysOnTop(true);
+        stage.setTitle(title);
+        stage.setResizable(resiable);
+        stage.setAlwaysOnTop(onTop);
         stage.setScene(scene);
         stage.show();
     }

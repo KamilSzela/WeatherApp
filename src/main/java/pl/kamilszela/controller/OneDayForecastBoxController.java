@@ -6,7 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pl.kamilszela.AppManager;
-import pl.kamilszela.controller.BaseController;
 import pl.kamilszela.model.WeatherCityModel;
 import pl.kamilszela.view.ViewFactory;
 

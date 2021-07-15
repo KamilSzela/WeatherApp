@@ -2,12 +2,9 @@ package pl.kamilszela;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.google.gson.JsonObject;
 import javafx.collections.FXCollections;
 import pl.kamilszela.model.WeatherCityModel;
-
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
