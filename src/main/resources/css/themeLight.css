@@ -1,0 +1,6 @@
+.container{
+    -fx-background-color: #888888;
+}
+Button {
+    -fx-background-color: #9bbec4;
+}

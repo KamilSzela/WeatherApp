@@ -23,6 +23,8 @@ public class ViewFactory {
         this.appManager = appManager;
     }
 
+    private ColorTheme colorTheme = ColorTheme.LIGHT;
+
     public void showMainWindow(){
         BaseController controller = new MainWindowController(appManager, this);
         String fileName = "/fxml/mainWindow.fxml";
@@ -85,6 +87,7 @@ public class ViewFactory {
 
     private void showStage(String title, Parent parent, boolean resiable, boolean onTop){
         Scene scene = new Scene(parent);
+        updateStyle(scene);
         Stage stage = new Stage();
         stage.setTitle(title);
         stage.setResizable(resiable);
@@ -104,5 +107,18 @@ public class ViewFactory {
             ioException.printStackTrace();
         }
         return parent;
+    }
+
+    public void updateStyle(Scene scene){
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add(getClass().getResource(ColorTheme.getStylesheetPath(colorTheme)).toExternalForm());
+    }
+
+    public ColorTheme getColorTheme() {
+        return colorTheme;
+    }
+
+    public void setColorTheme(ColorTheme colorTheme) {
+        this.colorTheme = colorTheme;
     }
 }
