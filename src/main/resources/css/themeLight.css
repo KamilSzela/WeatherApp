@@ -1,6 +1,37 @@
-.container{
-    -fx-background-color: #888888;
+*{
+    -fx-my-background-color: #f2e5d8;
+    -fx-my-hover-color:#d1a76d;
+    -fx-my-default-element-color: #7babdb;
+    -fx-my-element-hover-color: #362c91;
+    -fx-my-font-hover-color: #f5efe9;
+    -fx-my-error-text-fill: #690f0f;
+}
+
+.container {
+    -fx-background-color: -fx-my-background-color;
 }
 Button {
-    -fx-background-color: #9bbec4;
+    -fx-background-color: -fx-my-default-element-color;
+    -fx-text-fill: black;
+}
+Button:hover {
+    -fx-background-color: -fx-my-element-hover-color;
+    -fx-text-fill: -fx-my-font-hover-color;
+    -fx-cursor: hand;
+}
+AnchorPane {
+     -fx-background-color: -fx-my-background-color;
+}
+HBox {
+    -fx-background-color: -fx-my-background-color;
+    -fx-text-fill: black;
+}
+HBox:hover {
+    -fx-background-color: #cce0fc;
+    -fx-text-fill: -fx-my-font-hover-color;
+    -fx-cursor: hand;
+}
+VBox > .label:hover{
+    -fx-text-fill: -fx-my-font-hover-color;
+    -fx-underline: true;
 }
