@@ -2,6 +2,7 @@ package pl.kamilszela.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -9,6 +10,7 @@ import pl.kamilszela.AppManager;
 import pl.kamilszela.controller.services.CurrentTownJsonDownloadService;
 import pl.kamilszela.controller.services.DestinationTownJsonDownloadService;
 import pl.kamilszela.controller.services.JsonDownloadService;
+import pl.kamilszela.view.ColorTheme;
 import pl.kamilszela.view.ViewFactory;
 
 import java.net.URL;
@@ -67,6 +69,7 @@ public class MainWindowController extends BaseController implements Initializabl
                 case SUCCESS:
                     service.setForecastInAppManager();
                     appManager.setParametersInWeatherCityModel();
+                    this.errorLabel.setText("");
                     viewFactory.prepareForecastPanel(destinationForcastField, sourceTownForcastField);
                     return;
                 case FAILED_BY_MALFORMED_URL:
@@ -78,6 +81,26 @@ public class MainWindowController extends BaseController implements Initializabl
             }
         });
 
+    }
+    @FXML
+    void setDarkTheme() {
+        viewFactory.setColorTheme(ColorTheme.DARK);
+        viewFactory.updateStyle(getScene());
+    }
+
+    @FXML
+    void setLightTheme() {
+        viewFactory.setColorTheme(ColorTheme.LIGHT);
+        viewFactory.updateStyle(getScene());
+    }
+    @FXML
+    void closeApp() {
+        System.exit(0);
+    }
+
+    @FXML
+    void showAboutWindow() {
+        viewFactory.showAboutWindow();
     }
 
     @Override
@@ -99,5 +122,8 @@ public class MainWindowController extends BaseController implements Initializabl
     private void clearForecastFields() {
         destinationForcastField.getChildren().clear();
         sourceTownForcastField.getChildren().clear();
+    }
+    private Scene getScene(){
+        return this.errorLabel.getScene();
     }
 }

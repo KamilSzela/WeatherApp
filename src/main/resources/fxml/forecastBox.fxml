@@ -8,14 +8,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="forecastBox" prefHeight="91.0" prefWidth="225.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="forecastBox" prefHeight="95.0" prefWidth="245.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox fx:id="forecastBoxInnerBox" prefHeight="100.0" prefWidth="225.0">
+      <HBox fx:id="forecastBoxInnerBox" prefHeight="100.0" prefWidth="245.0">
          <children>
             <ImageView fx:id="iconBox" fitHeight="62.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true" />
-            <VBox prefHeight="99.0" prefWidth="67.0" spacing="3.0">
+            <VBox prefHeight="100.0" prefWidth="83.0" spacing="3.0">
                <children>
-                  <Label prefHeight="9.0" prefWidth="57.0" text="Temperatura">
+                  <Label prefHeight="15.0" prefWidth="62.0" text="Data">
+                     <font>
+                        <Font name="System Bold" size="10.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="15.0" prefWidth="70.0" text="Temperatura">
                      <font>
                         <Font size="10.0" />
                      </font>
@@ -35,18 +40,18 @@
                         <Font size="10.0" />
                      </font>
                   </Label>
-                  <Label prefHeight="4.0" prefWidth="21.0" text="Data">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Label>
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </VBox>
-            <VBox prefHeight="100.0" prefWidth="102.0" spacing="3.0">
+            <VBox prefHeight="100.0" prefWidth="123.0" spacing="3.0">
                <children>
+                  <Label fx:id="dateLabel" text="data">
+                     <font>
+                        <Font name="System Bold" size="10.0" />
+                     </font>
+                  </Label>
                   <Label fx:id="temperatureLabel" text="temp">
                      <font>
                         <Font size="10.0" />
@@ -63,11 +68,6 @@
                      </font>
                   </Label>
                   <Label fx:id="windLabel" text="wiatr">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="dateLabel" text="data">
                      <font>
                         <Font size="10.0" />
                      </font>

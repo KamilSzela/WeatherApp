@@ -57,12 +57,12 @@ public class ForecastBoxController extends BaseController implements Initializab
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        forecastBox.setOnMouseEntered(e->{
-            forecastBoxInnerBox.setStyle("-fx-background-color: silver");
-            forecastBox.setStyle("-fx-cursor: hand;");
-        });
-        forecastBox.setOnMouseExited(e->{
-            forecastBoxInnerBox.setStyle("-fx-background-color: white;");
-        });
+//        forecastBox.setOnMouseEntered(e->{
+//            forecastBoxInnerBox.setStyle("-fx-background-color: silver");
+//            forecastBox.setStyle("-fx-cursor: hand;");
+//        });
+//        forecastBox.setOnMouseExited(e->{
+//            forecastBoxInnerBox.setStyle("-fx-background-color: white;");
+//        });
     }
 }

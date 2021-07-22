@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="258.0" prefWidth="455.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text layoutX="19.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Aplikacja Pogoda na Lato jest aplikacją słuzacą prezentowaniu prognozy pogody na najblizsze 5 dni. " textAlignment="CENTER" wrappingWidth="418.13671875" />
+      <Button fx:id="closeButton" layoutX="200.0" layoutY="219.0" mnemonicParsing="false" onAction="#closeWindow" text="Zamknij" />
+      <Text layoutX="19.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Okno aplikacji sklada się z dwóch kolumn. Pierwsza z nich wyswietla prognozę dla miasta, w którym się znajdujemy, a druga dla celu naszej podróży." textAlignment="CENTER" wrappingWidth="418.13671469688416" />
+      <Text layoutX="18.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Po kliknięciu w okienko pogody na dany dzień pojawi się okno przedstawiające szczegółową pogodę na ten dzień." textAlignment="CENTER" wrappingWidth="418.13671469688416" />
+      <Label layoutX="74.0" layoutY="185.0" prefHeight="34.0" prefWidth="309.0" text="Ikonki z konta użytkownika Freepik na www.flaticon.com" textFill="#867b7b" />
+      <Text layoutX="151.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zapraszam do korzystania ;-)" />
+   </children>
+</AnchorPane>

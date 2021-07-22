@@ -1,0 +1,50 @@
+*{
+    -fx-my-background-color: #696a6e;
+    -fx-my-hover-color: #d1c9ae;
+    -fx-my-default-element-color: #a38476;
+    -fx-my-element-hover-color: #7a5a4c;
+    -fx-my-font-hover-color: #f5efe9;
+    -fx-my-error-text-fill: #690f0f;
+}
+
+.container {
+    -fx-background-color: -fx-my-background-color;
+    -fx-text-fill: #f0ede4;
+}
+Button {
+    -fx-background-color: -fx-my-default-element-color;
+    -fx-text-fill: black;
+}
+Button:hover {
+    -fx-background-color: -fx-my-element-hover-color;
+    -fx-text-fill: -fx-my-font-hover-color;
+    -fx-cursor: hand;
+}
+.label{
+    -fx-text-fill: #d1cec5;
+}
+AnchorPane {
+     -fx-background-color: -fx-my-background-color;
+}
+HBox {
+    -fx-background-color: -fx-my-background-color;
+    -fx-text-fill: #f0ede4;
+    -fx-padding: 0.20em 0.3em 0.0em 0.3em;
+}
+.mainWindowForecastColumn > AnchorPane > HBox:hover{
+    -fx-background-color: #87878c;
+    -fx-text-fill: -fx-my-font-hover-color;
+    -fx-background-radius: 5;
+    -fx-border-color: #2f3370;
+    -fx-cursor: hand;
+}
+#errorLabel{
+    -fx-text-fill: -fx-my-error-text-fill;
+    -fx-font-weight: bold;
+}
+.menu-bar{
+    -fx-background-color: -fx-my-background-color;
+}
+.menu-item > .label {
+    -fx-text-fill: black;
+}
