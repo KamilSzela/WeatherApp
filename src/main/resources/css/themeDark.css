@@ -42,3 +42,9 @@ HBox {
     -fx-text-fill: -fx-my-error-text-fill;
     -fx-font-weight: bold;
 }
+.menu-bar{
+    -fx-background-color: -fx-my-background-color;
+}
+.menu-item > .label {
+    -fx-text-fill: black;
+}

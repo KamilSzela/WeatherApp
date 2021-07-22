@@ -34,6 +34,9 @@ HBox {
     -fx-border-color: #2f3370;
     -fx-cursor: hand;
 }
+.menu-bar{
+    -fx-background-color: -fx-my-background-color;
+}
 #errorLabel{
     -fx-text-fill: -fx-my-error-text-fill;
     -fx-font-weight: bold;

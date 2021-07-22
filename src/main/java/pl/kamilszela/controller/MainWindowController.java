@@ -93,6 +93,15 @@ public class MainWindowController extends BaseController implements Initializabl
         viewFactory.setColorTheme(ColorTheme.LIGHT);
         viewFactory.updateStyle(getScene());
     }
+    @FXML
+    void closeApp() {
+        System.exit(0);
+    }
+
+    @FXML
+    void showAboutWindow() {
+        viewFactory.showAboutWindow();
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

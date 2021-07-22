@@ -39,7 +39,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="Plik">
             <items>
-              <MenuItem mnemonicParsing="false" text="Zamknij" />
+              <MenuItem mnemonicParsing="false" onAction="#closeApp" text="Zamknij" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Skórki">
@@ -48,9 +48,9 @@
                   <MenuItem mnemonicParsing="false" onAction="#setLightTheme" text="Styl jasny" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu mnemonicParsing="false" text="O Aplikacji">
             <items>
-              <MenuItem mnemonicParsing="false" text="O Aplikacji" />
+              <MenuItem mnemonicParsing="false" onAction="#showAboutWindow" text="O Aplikacji" />
             </items>
           </Menu>
         </menus>

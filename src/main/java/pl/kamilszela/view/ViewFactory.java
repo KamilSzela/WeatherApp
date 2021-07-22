@@ -6,10 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import pl.kamilszela.AppManager;
-import pl.kamilszela.controller.BaseController;
-import pl.kamilszela.controller.MainWindowController;
-import pl.kamilszela.controller.ForecastBoxController;
-import pl.kamilszela.controller.OneDayForecastBoxController;
+import pl.kamilszela.controller.*;
 import pl.kamilszela.model.WeatherCityModel;
 
 import java.io.IOException;
@@ -120,5 +117,12 @@ public class ViewFactory {
 
     public void setColorTheme(ColorTheme colorTheme) {
         this.colorTheme = colorTheme;
+    }
+
+    public void showAboutWindow() {
+        AboutWindowController controller = new AboutWindowController(this.appManager, this);
+        String fileName = "/fxml/aboutWindow.fxml";
+        Parent parent = loadFXMLFile(controller, fileName);
+        showStage("Opis aplikacji", parent, false, true);
     }
 }
