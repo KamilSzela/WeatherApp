@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import javafx.collections.FXCollections;
 import pl.kamilszela.model.WeatherCityModel;
+
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -59,6 +61,9 @@ public class AppManager {
             model.setWeather((Map<String, String>) weatherArrayList.get(0));
             model.setWind((Map<String, Double>) prediction.get("wind"));
             model.setDt_txt((String) prediction.get("dt_txt"));
+            Double timestamp = (Double) prediction.get("dt");
+            Timestamp dateTimeStamp = new Timestamp(timestamp.longValue());
+            model.setTimestamp(dateTimeStamp);
             model.setCityData(cityData);
             list.add(model);
         }

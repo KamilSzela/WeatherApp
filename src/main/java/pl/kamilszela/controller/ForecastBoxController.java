@@ -39,7 +39,7 @@ public class ForecastBoxController extends BaseController implements Initializab
     }
 
     public void prepareForecastBox(int i, List<WeatherCityModel> list){
-        String dateTime = list.get(i).getDt_txt();
+        String dateTime = list.get(i).getTimestamp().toString();
         dateLabel.setText(dateTime);
         Double temperature = list.get(i).getMain().get("temp");
         temperatureLabel.setText(temperature.toString() + " deg C");
@@ -57,12 +57,5 @@ public class ForecastBoxController extends BaseController implements Initializab
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        forecastBox.setOnMouseEntered(e->{
-//            forecastBoxInnerBox.setStyle("-fx-background-color: silver");
-//            forecastBox.setStyle("-fx-cursor: hand;");
-//        });
-//        forecastBox.setOnMouseExited(e->{
-//            forecastBoxInnerBox.setStyle("-fx-background-color: white;");
-//        });
     }
 }
