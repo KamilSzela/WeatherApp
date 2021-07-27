@@ -61,7 +61,8 @@ public class AppManager {
             model.setWeather((Map<String, String>) weatherArrayList.get(0));
             model.setWind((Map<String, Double>) prediction.get("wind"));
             model.setDt_txt((String) prediction.get("dt_txt"));
-            Double timestamp = (Double) prediction.get("dt");
+            String timestampString = (prediction.get("dt").toString());
+            Double timestamp = Double.valueOf(timestampString) * 1000;
             Timestamp dateTimeStamp = new Timestamp(timestamp.longValue());
             model.setTimestamp(dateTimeStamp);
             model.setCityData(cityData);

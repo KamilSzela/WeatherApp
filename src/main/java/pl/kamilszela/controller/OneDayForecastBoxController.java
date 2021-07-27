@@ -36,7 +36,8 @@ public class OneDayForecastBoxController extends BaseController implements Initi
         String cityName = list.get(k).getCityData().get("name").toString();
         String countryCode = list.get(k).getCityData().get("country").toString();
         String dateForDisplay = list.get(k).getDt_txt().substring(0,10);
-        cityDataLabel.setText(cityName + ", " + countryCode + "; " + dateForDisplay);
+        String timeZone = list.get(k).getCityData().get("timezone").toString();
+        cityDataLabel.setText(cityName + ", " + countryCode + "; " + dateForDisplay + " timezone: " + timeZone);
         if(counter > 4){
             viewFactory.showForecastInVBox(k, list, columnRight, false);
         } else {
