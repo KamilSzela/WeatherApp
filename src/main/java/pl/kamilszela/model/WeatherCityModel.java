@@ -1,5 +1,6 @@
 package pl.kamilszela.model;
 
+import java.sql.Timestamp;
 import java.util.Map;
 
 public class WeatherCityModel {
@@ -8,6 +9,7 @@ public class WeatherCityModel {
     Map<String, Double> wind = null;
     String dt_txt = null;
     Map<String, Object> cityData = null;
+    Timestamp timestamp = null;
 
     public Map<String, Double> getMain() {
         return main;
@@ -39,6 +41,14 @@ public class WeatherCityModel {
 
     public void setDt_txt(String dt_txt) {
         this.dt_txt = dt_txt;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
     }
 
     public Map<String, Object> getCityData() {

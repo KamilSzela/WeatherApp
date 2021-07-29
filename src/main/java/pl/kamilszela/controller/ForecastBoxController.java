@@ -12,6 +12,9 @@ import pl.kamilszela.model.WeatherCityModel;
 import pl.kamilszela.view.ViewFactory;
 
 import java.net.URL;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -40,7 +43,10 @@ public class ForecastBoxController extends BaseController implements Initializab
 
     public void prepareForecastBox(int i, List<WeatherCityModel> list){
         String dateTime = list.get(i).getDt_txt();
-        dateLabel.setText(dateTime);
+        Instant instant = list.get(i).getTimestamp().toInstant();
+        String secondsOffset = list.get(i).getCityData().get("timezone").toString();
+        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(instant, ZoneId.of(prepareTimeOfTimeZone(secondsOffset)));
+        dateLabel.setText(zonedDateTime.toString().substring(0,10) + " " + zonedDateTime.getHour() + ":00");
         Double temperature = list.get(i).getMain().get("temp");
         temperatureLabel.setText(temperature.toString() + " deg C");
         Double pressure = list.get(i).getMain().get("pressure");
@@ -55,14 +61,23 @@ public class ForecastBoxController extends BaseController implements Initializab
         iconBox.setImage(icon);
     }
 
+    private String prepareTimeOfTimeZone(String secoundsOffsetString){
+        Double secondsDouble = Double.valueOf(secoundsOffsetString);
+        int secondsInt = secondsDouble.intValue();
+
+        int hours = secondsInt / 3600;
+        String zoneId = "";
+
+        if(hours > 0){
+            zoneId = "GMT+" + hours;
+        } else {
+            zoneId = "GMT" + hours;
+        }
+
+        return zoneId;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        forecastBox.setOnMouseEntered(e->{
-//            forecastBoxInnerBox.setStyle("-fx-background-color: silver");
-//            forecastBox.setStyle("-fx-cursor: hand;");
-//        });
-//        forecastBox.setOnMouseExited(e->{
-//            forecastBoxInnerBox.setStyle("-fx-background-color: white;");
-//        });
     }
 }
