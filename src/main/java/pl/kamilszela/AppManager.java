@@ -79,4 +79,20 @@ public class AppManager {
         currentCityWeatherModelList.clear();
         destinationCityWeatherModelList.clear();
     }
+
+    public String prepareTimeOfTimeZone(String secoundsOffsetString){
+        Double secondsDouble = Double.valueOf(secoundsOffsetString);
+        int secondsInt = secondsDouble.intValue();
+
+        int hours = secondsInt / 3600;
+        String zoneId = "";
+
+        if(hours > 0){
+            zoneId = "GMT+" + hours;
+        } else {
+            zoneId = "GMT" + hours;
+        }
+
+        return zoneId;
+    }
 }

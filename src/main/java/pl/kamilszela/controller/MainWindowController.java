@@ -105,8 +105,8 @@ public class MainWindowController extends BaseController implements Initializabl
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.sourceTown.setText("London");
-        this.destinationTown.setText("Paris");
+        this.sourceTown.setText("Londyn");
+        this.destinationTown.setText("Paryż");
         setUpForecastFields();
     }
 

@@ -16,6 +16,6 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="cityDataLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="164.0" layoutY="41.0" prefHeight="17.0" prefWidth="171.0" text="Label" textAlignment="CENTER" AnchorPane.leftAnchor="132.0" AnchorPane.rightAnchor="132.0" />
+      <Label fx:id="cityDataLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="102.0" layoutY="41.0" prefHeight="17.0" prefWidth="295.0" text="Label" textAlignment="CENTER" AnchorPane.leftAnchor="102.0" AnchorPane.rightAnchor="102.0" />
    </children>
 </AnchorPane>

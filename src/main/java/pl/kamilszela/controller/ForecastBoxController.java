@@ -36,19 +36,20 @@ public class ForecastBoxController extends BaseController implements Initializab
     private AnchorPane forecastBox;
     @FXML
     private HBox forecastBoxInnerBox;
+    private char degreeSign = 176;
 
     public ForecastBoxController(AppManager appManager, ViewFactory viewFactory) {
         super(appManager, viewFactory);
     }
 
     public void prepareForecastBox(int i, List<WeatherCityModel> list){
-        String dateTime = list.get(i).getDt_txt();
         Instant instant = list.get(i).getTimestamp().toInstant();
         String secondsOffset = list.get(i).getCityData().get("timezone").toString();
-        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(instant, ZoneId.of(prepareTimeOfTimeZone(secondsOffset)));
+        String hoursOffset = appManager.prepareTimeOfTimeZone(secondsOffset);
+        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(instant, ZoneId.of(hoursOffset));
         dateLabel.setText(zonedDateTime.toString().substring(0,10) + " " + zonedDateTime.getHour() + ":00");
         Double temperature = list.get(i).getMain().get("temp");
-        temperatureLabel.setText(temperature.toString() + " deg C");
+        temperatureLabel.setText(temperature.toString() + " " + degreeSign + "C");
         Double pressure = list.get(i).getMain().get("pressure");
         pressureLabel.setText(pressure + " hPa");
         Double humidity = list.get(i).getMain().get("humidity");
@@ -59,22 +60,6 @@ public class ForecastBoxController extends BaseController implements Initializab
         String path = "/icons/" + iconName + ".png";
         Image icon = new Image(String.valueOf(this.getClass().getResource(path)));
         iconBox.setImage(icon);
-    }
-
-    private String prepareTimeOfTimeZone(String secoundsOffsetString){
-        Double secondsDouble = Double.valueOf(secoundsOffsetString);
-        int secondsInt = secondsDouble.intValue();
-
-        int hours = secondsInt / 3600;
-        String zoneId = "";
-
-        if(hours > 0){
-            zoneId = "GMT+" + hours;
-        } else {
-            zoneId = "GMT" + hours;
-        }
-
-        return zoneId;
     }
 
     @Override
