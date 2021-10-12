@@ -44,11 +44,13 @@ public class MainWindowController extends BaseController implements Initializabl
 
     @FXML
     public void generateForcastAction() {
-        if(sourceTown.getText() != "" && destinationTown.getText() != ""){
+        if(!sourceTown.getText().equals("") && !destinationTown.getText().equals("")){
             clearForecastFields();
             appManager.clearJsonForecast();
             downloadCurrentTownForcast();
             downloadDestinationTownForcast();
+        } else {
+            errorLabel.setText("Proszę wpisać obie nazwy miast w odpowiednie pola");
         }
     }
 

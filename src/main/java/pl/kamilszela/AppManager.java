@@ -12,18 +12,18 @@ import java.util.Map;
 
 public class AppManager {
 
-    private String currentTownForcastJson;
+    private String currentTownForecastJson;
     private String destinationTownForcastJson;
     public List <WeatherCityModel> currentCityWeatherModelList = FXCollections.observableArrayList();
     public List <WeatherCityModel> destinationCityWeatherModelList = FXCollections.observableArrayList();
 
 
     public String getCurrentTownForcastJson() {
-        return currentTownForcastJson;
+        return currentTownForecastJson;
     }
 
     public void setCurrentTownForcastJson(String currentTownForcastJson) {
-        this.currentTownForcastJson = currentTownForcastJson;
+        this.currentTownForecastJson = currentTownForcastJson;
     }
 
     public String getDestinationTownForcastJson() {
@@ -39,8 +39,8 @@ public class AppManager {
             clearListsOfWeatherForecast();
         }
 
-        if(currentTownForcastJson != null && currentCityWeatherModelList.size() == 0){
-            setUpListWithPredictionModel(currentCityWeatherModelList, currentTownForcastJson);
+        if(currentTownForecastJson != null && currentCityWeatherModelList.size() == 0){
+            setUpListWithPredictionModel(currentCityWeatherModelList, currentTownForecastJson);
         } else if (destinationTownForcastJson != null && destinationCityWeatherModelList.size() == 0){
             setUpListWithPredictionModel(destinationCityWeatherModelList, destinationTownForcastJson);
         }
@@ -50,11 +50,11 @@ public class AppManager {
         Gson gson = new Gson();
         Map<String, Object> forecastConvertedToMap = gson.fromJson(forecastJson, new TypeToken<Map<String,
                 Object>>(){}.getType());
-        ArrayList<Object> weatherForcastList = (ArrayList<Object>) forecastConvertedToMap.get("list");
+        ArrayList<Object> weatherForecastList = (ArrayList<Object>) forecastConvertedToMap.get("list");
         Map<String, Object> cityData = (Map<String, Object>) forecastConvertedToMap.get("city");
 
-        for(int i = 0; i < weatherForcastList.size(); i++){
-            Map prediction = (Map) weatherForcastList.get(i);
+        for(int i = 0; i < weatherForecastList.size(); i++){
+            Map prediction = (Map) weatherForecastList.get(i);
             WeatherCityModel model = new WeatherCityModel();
             model.setMain((Map<String, Double>) prediction.get("main"));
             ArrayList weatherArrayList = (ArrayList) prediction.get("weather");
@@ -71,7 +71,7 @@ public class AppManager {
         forecastJson = null;
     }
     public void clearJsonForecast(){
-        currentTownForcastJson = null;
+        currentTownForecastJson = null;
         destinationTownForcastJson = null;
     }
 
