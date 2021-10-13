@@ -128,4 +128,12 @@ public class MainWindowController extends BaseController implements Initializabl
     private Scene getScene(){
         return this.errorLabel.getScene();
     }
+
+    public TextField getSourceTown() {
+        return sourceTown;
+    }
+
+    public Label getErrorLabel() {
+        return errorLabel;
+    }
 }
