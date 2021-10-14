@@ -136,4 +136,12 @@ public class MainWindowController extends BaseController implements Initializabl
     public Label getErrorLabel() {
         return errorLabel;
     }
+
+    public VBox getSourceTownForcastField() {
+        return sourceTownForcastField;
+    }
+
+    public VBox getDestinationForcastField() {
+        return destinationForcastField;
+    }
 }
