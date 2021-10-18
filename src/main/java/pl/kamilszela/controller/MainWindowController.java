@@ -1,5 +1,6 @@
 package pl.kamilszela.controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -97,6 +98,7 @@ public class MainWindowController extends BaseController implements Initializabl
     }
     @FXML
     void closeApp() {
+        Platform.exit();
         System.exit(0);
     }
 
@@ -131,6 +133,10 @@ public class MainWindowController extends BaseController implements Initializabl
 
     public TextField getSourceTown() {
         return sourceTown;
+    }
+
+    public TextField getDestinationTown() {
+        return destinationTown;
     }
 
     public Label getErrorLabel() {
