@@ -95,4 +95,8 @@ public class AppManager {
 
         return zoneId;
     }
+
+    public List<WeatherCityModel> getCurrentCityWeatherModelList() {
+        return currentCityWeatherModelList;
+    }
 }

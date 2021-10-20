@@ -46,6 +46,32 @@ public class OneDayForecastBoxController extends BaseController implements Initi
         }
     }
 
+    public void prepareForecastDataForOneDay(List<WeatherCityModel> list, int i){
+        String dateTime = list.get(i).getDt_txt();
+        String date = dateTime.substring(0,10);
+        int counter = 0;
+        for(int k = 0; k < list.size(); k++){
+            String dateOFSingleRecord = list.get(k).getDt_txt();
+            String dateForComparison = dateOFSingleRecord.substring(0,10);
+            if(date.equals(dateForComparison)){
+                counter++;
+                fillColumnsWithForecastData(list, k, counter);
+            }
+        }
+    }
+
+    public VBox getColumnLeft() {
+        return columnLeft;
+    }
+
+    public VBox getColumnRight() {
+        return columnRight;
+    }
+
+    public Label getCityDataLabel() {
+        return cityDataLabel;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

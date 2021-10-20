@@ -38,7 +38,6 @@ class ForecastBoxControllerTest extends ApplicationTest {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/forecastBox.fxml"));
         loader.setController(controller);
         Parent mainNode = loader.load();
-       // controller.prepareForecastBox(0, prepareExampleListForSetUpInForecastBox());
 
         stage.setScene(new Scene(mainNode));
         stage.show();
@@ -55,7 +54,6 @@ class ForecastBoxControllerTest extends ApplicationTest {
                 //then
                 String iconUrl = controller.getIconBox().getImage().getUrl();
                 String expectedIconUrl = controller.getClass().getResource("/icons/01n.png").toString();
-                String expectedTemplabel = "20.06 " + degreeSign + "C";
                 assertAll(
                         () -> assertThat(iconUrl, equalTo(expectedIconUrl)),
                         () -> assertThat(controller.getTemperatureLabel().getText(), equalTo("20.06 " + degreeSign +

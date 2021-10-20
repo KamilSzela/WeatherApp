@@ -67,18 +67,7 @@ public class ViewFactory {
         OneDayForecastBoxController controller = new OneDayForecastBoxController(this.appManager, this);
         String fileName = "/fxml/oneDayForecastBox.fxml";
         Parent parent = loadFXMLFile(controller, fileName);
-
-        String dateTime = list.get(i).getDt_txt();
-        String date = dateTime.substring(0,10);
-        int counter = 0;
-        for(int k = 0; k < list.size(); k++){
-            String dateOFSingleRecord = list.get(k).getDt_txt();
-            String dateForComparision = dateOFSingleRecord.substring(0,10);
-            if(date.equals(dateForComparision)){
-                counter++;
-                controller.fillColumnsWithForecastData(list, k, counter);
-            }
-        }
+        controller.prepareForecastDataForOneDay(list, i);
         showStage("Pogoda na wybrany dzień", parent, false, true);
     }
 
