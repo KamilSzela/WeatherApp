@@ -80,8 +80,8 @@ public class AppManager {
         destinationCityWeatherModelList.clear();
     }
 
-    public String prepareTimeOfTimeZone(String secoundsOffsetString){
-        Double secondsDouble = Double.valueOf(secoundsOffsetString);
+    public String prepareTimeOfTimeZone(String secondsOffsetString){
+        Double secondsDouble = Double.valueOf(secondsOffsetString);
         int secondsInt = secondsDouble.intValue();
 
         int hours = secondsInt / 3600;

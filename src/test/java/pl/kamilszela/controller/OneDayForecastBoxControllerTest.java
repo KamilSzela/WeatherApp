@@ -18,6 +18,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class OneDayForecastBoxControllerTest extends ApplicationTest {
@@ -52,18 +55,30 @@ class OneDayForecastBoxControllerTest extends ApplicationTest {
     @Test
     void shouldPopulateVboxesWithForecastBoxes(){
         //given
-
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 //when
-                controller.prepareForecastDataForOneDay(manager.getCurrentCityWeatherModelList(), 8);
+                controller.prepareForecastDataForOneDay(manager.getCurrentCityWeatherModelList(), 3);
                 WaitForAsyncUtils.waitForFxEvents();
                 //then
-                System.out.println(controller.getColumnLeft().getChildren().size());
-                sleep(5000);
+                assertThat(controller.getColumnLeft().getChildren().size(), equalTo(4));
+                assertThat(controller.getColumnRight().getChildren().size(), equalTo(4));
             }
         });
     }
-
+    @Test
+    void forecastBoxInsideVboxShouldHaveNullOnClickEvent(){
+        //given
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                //when
+                controller.prepareForecastDataForOneDay(manager.getCurrentCityWeatherModelList(), 3);
+                WaitForAsyncUtils.waitForFxEvents();
+                //then
+                assertThat(controller.getColumnRight().getChildren().get(0).getOnMouseClicked(), nullValue());
+            }
+        });
+    }
 }
