@@ -46,7 +46,7 @@ public class AppManager {
         }
 
     }
-    public void setUpListWithPredictionModel(List<WeatherCityModel> list, String forecastJson){
+    private void setUpListWithPredictionModel(List<WeatherCityModel> list, String forecastJson){
         Gson gson = new Gson();
         Map<String, Object> forecastConvertedToMap = gson.fromJson(forecastJson, new TypeToken<Map<String,
                 Object>>(){}.getType());
@@ -75,7 +75,7 @@ public class AppManager {
         destinationTownForcastJson = null;
     }
 
-    public void clearListsOfWeatherForecast(){
+    private void clearListsOfWeatherForecast(){
         currentCityWeatherModelList.clear();
         destinationCityWeatherModelList.clear();
     }
@@ -99,4 +99,9 @@ public class AppManager {
     public List<WeatherCityModel> getCurrentCityWeatherModelList() {
         return currentCityWeatherModelList;
     }
+
+    public List<WeatherCityModel> getDestinationCityWeatherModelList() {
+        return destinationCityWeatherModelList;
+    }
+
 }

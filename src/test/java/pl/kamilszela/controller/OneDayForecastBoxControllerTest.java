@@ -29,8 +29,6 @@ class OneDayForecastBoxControllerTest extends ApplicationTest {
     AppManager manager;
     ViewFactory factory;
     OneDayForecastBoxController controller;
-    Boolean closeRequested = false;
-
 
     @Start
     public void start(Stage stage) throws Exception{
@@ -81,6 +79,25 @@ class OneDayForecastBoxControllerTest extends ApplicationTest {
                 WaitForAsyncUtils.waitForFxEvents();
                 //then
                 assertThat(controller.getColumnRight().getChildren().get(0).getOnMouseClicked(), nullValue());
+            }
+        });
+    }
+    @Test
+    void shouldPrepareCityDataLabel(){
+        //given
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                //when
+                controller.prepareForecastDataForOneDay(manager.getCurrentCityWeatherModelList(), 3);
+                WaitForAsyncUtils.waitForFxEvents();
+                String townName = manager.getCurrentCityWeatherModelList().get(3).getCityData().get("name").toString();
+                String countryCode =
+                        manager.getCurrentCityWeatherModelList().get(3).getCityData().get("country").toString();
+                String date = manager.getCurrentCityWeatherModelList().get(3).getDt_txt().substring(0,10);
+                String expectedLabelContent = townName + ", " + countryCode + "; " + date + ", strefa czasowa: GMT+2";
+                //then
+                assertThat(controller.getCityDataLabel().getText(), equalTo(expectedLabelContent));
             }
         });
     }
