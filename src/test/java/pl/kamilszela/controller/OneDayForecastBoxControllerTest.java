@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -28,6 +29,8 @@ class OneDayForecastBoxControllerTest extends ApplicationTest {
     AppManager manager;
     ViewFactory factory;
     OneDayForecastBoxController controller;
+    Boolean closeRequested = false;
+
 
     @Start
     public void start(Stage stage) throws Exception{
