@@ -13,7 +13,7 @@ import java.util.Map;
 public class AppManager {
 
     private String currentTownForecastJson;
-    private String destinationTownForcastJson;
+    private String destinationTownForecastJson;
     public List <WeatherCityModel> currentCityWeatherModelList = FXCollections.observableArrayList();
     public List <WeatherCityModel> destinationCityWeatherModelList = FXCollections.observableArrayList();
 
@@ -26,12 +26,12 @@ public class AppManager {
         this.currentTownForecastJson = currentTownForcastJson;
     }
 
-    public String getDestinationTownForcastJson() {
-        return destinationTownForcastJson;
+    public String getDestinationTownForecastJson() {
+        return destinationTownForecastJson;
     }
 
-    public void setDestinationTownForcastJson(String destinationTownForcastJson) {
-        this.destinationTownForcastJson = destinationTownForcastJson;
+    public void setDestinationTownForecastJson(String destinationTownForecastJson) {
+        this.destinationTownForecastJson = destinationTownForecastJson;
     }
 
     public void setParametersInWeatherCityModel(){
@@ -39,10 +39,13 @@ public class AppManager {
             clearListsOfWeatherForecast();
         }
 
-        if(currentTownForecastJson != null && currentCityWeatherModelList.size() == 0){
-            setUpListWithPredictionModel(currentCityWeatherModelList, currentTownForecastJson);
-        } else if (destinationTownForcastJson != null && destinationCityWeatherModelList.size() == 0){
-            setUpListWithPredictionModel(destinationCityWeatherModelList, destinationTownForcastJson);
+        if(currentTownForecastJson != null && destinationTownForecastJson != null){
+            if(currentTownForecastJson.equals("") || destinationTownForecastJson.equals("")){
+                throw new IllegalArgumentException("Json data empty");
+            } else {
+                setUpListWithPredictionModel(currentCityWeatherModelList, currentTownForecastJson);
+                setUpListWithPredictionModel(destinationCityWeatherModelList, destinationTownForecastJson);
+            }
         }
 
     }
@@ -72,7 +75,7 @@ public class AppManager {
     }
     public void clearJsonForecast(){
         currentTownForecastJson = null;
-        destinationTownForcastJson = null;
+        destinationTownForecastJson = null;
     }
 
     private void clearListsOfWeatherForecast(){

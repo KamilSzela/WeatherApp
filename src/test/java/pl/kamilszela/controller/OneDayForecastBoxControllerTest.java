@@ -51,6 +51,7 @@ class OneDayForecastBoxControllerTest extends ApplicationTest {
                 ".txt");
         String result = new BufferedReader(new InputStreamReader(stream)).lines().collect(Collectors.joining());
         manager.setCurrentTownForcastJson(result);
+        manager.setDestinationTownForecastJson(result);
     }
 
     @Test

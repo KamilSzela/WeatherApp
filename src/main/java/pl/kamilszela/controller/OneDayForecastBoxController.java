@@ -3,6 +3,7 @@ package pl.kamilszela.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pl.kamilszela.AppManager;
@@ -31,14 +32,16 @@ public class OneDayForecastBoxController extends BaseController implements Initi
         activeStage.close();
     }
 
-    public void fillColumnsWithForecastData(List<WeatherCityModel> list, int k, int counter){
+    private void fillColumnsWithForecastData(List<WeatherCityModel> list, int k, int counter){
 
         String cityName = list.get(k).getCityData().get("name").toString();
         String countryCode = list.get(k).getCityData().get("country").toString();
         String dateForDisplay = list.get(k).getDt_txt().substring(0,10);
         String timeZoneSeconds = list.get(k).getCityData().get("timezone").toString();
         String timeZone = appManager.prepareTimeOfTimeZone(timeZoneSeconds);
-        cityDataLabel.setText(cityName + ", " + countryCode + "; " + dateForDisplay + ", strefa czasowa: " + timeZone);
+        String fullLabelString = cityName + ", " + countryCode + "; " + dateForDisplay + ", strefa czasowa: " + timeZone;
+        cityDataLabel.setText(fullLabelString);
+        cityDataLabel.setTooltip(new Tooltip(fullLabelString));
         if(counter > 4){
             viewFactory.showForecastInVBox(k, list, columnRight, false);
         } else {
