@@ -9,7 +9,7 @@ public class DestinationTownJsonDownloadService extends JsonDownloadService{
     }
 
     public void setForecastInAppManager(){
-        appManager.setDestinationTownForcastJson(downloadedJson);
+        appManager.setDestinationTownForecastJson(downloadedJson);
     }
 
 }

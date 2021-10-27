@@ -12,26 +12,26 @@ import java.util.Map;
 
 public class AppManager {
 
-    private String currentTownForcastJson;
-    private String destinationTownForcastJson;
+    private String currentTownForecastJson;
+    private String destinationTownForecastJson;
     public List <WeatherCityModel> currentCityWeatherModelList = FXCollections.observableArrayList();
     public List <WeatherCityModel> destinationCityWeatherModelList = FXCollections.observableArrayList();
 
 
     public String getCurrentTownForcastJson() {
-        return currentTownForcastJson;
+        return currentTownForecastJson;
     }
 
     public void setCurrentTownForcastJson(String currentTownForcastJson) {
-        this.currentTownForcastJson = currentTownForcastJson;
+        this.currentTownForecastJson = currentTownForcastJson;
     }
 
-    public String getDestinationTownForcastJson() {
-        return destinationTownForcastJson;
+    public String getDestinationTownForecastJson() {
+        return destinationTownForecastJson;
     }
 
-    public void setDestinationTownForcastJson(String destinationTownForcastJson) {
-        this.destinationTownForcastJson = destinationTownForcastJson;
+    public void setDestinationTownForecastJson(String destinationTownForecastJson) {
+        this.destinationTownForecastJson = destinationTownForecastJson;
     }
 
     public void setParametersInWeatherCityModel(){
@@ -39,22 +39,25 @@ public class AppManager {
             clearListsOfWeatherForecast();
         }
 
-        if(currentTownForcastJson != null && currentCityWeatherModelList.size() == 0){
-            setUpListWithPredictionModel(currentCityWeatherModelList, currentTownForcastJson);
-        } else if (destinationTownForcastJson != null && destinationCityWeatherModelList.size() == 0){
-            setUpListWithPredictionModel(destinationCityWeatherModelList, destinationTownForcastJson);
+        if(currentTownForecastJson != null && destinationTownForecastJson != null){
+            if(currentTownForecastJson.equals("") || destinationTownForecastJson.equals("")){
+                throw new IllegalArgumentException("Json data empty");
+            } else {
+                setUpListWithPredictionModel(currentCityWeatherModelList, currentTownForecastJson);
+                setUpListWithPredictionModel(destinationCityWeatherModelList, destinationTownForecastJson);
+            }
         }
 
     }
-    public void setUpListWithPredictionModel(List<WeatherCityModel> list, String forecastJson){
+    private void setUpListWithPredictionModel(List<WeatherCityModel> list, String forecastJson){
         Gson gson = new Gson();
         Map<String, Object> forecastConvertedToMap = gson.fromJson(forecastJson, new TypeToken<Map<String,
                 Object>>(){}.getType());
-        ArrayList<Object> weatherForcastList = (ArrayList<Object>) forecastConvertedToMap.get("list");
+        ArrayList<Object> weatherForecastList = (ArrayList<Object>) forecastConvertedToMap.get("list");
         Map<String, Object> cityData = (Map<String, Object>) forecastConvertedToMap.get("city");
 
-        for(int i = 0; i < weatherForcastList.size(); i++){
-            Map prediction = (Map) weatherForcastList.get(i);
+        for(int i = 0; i < weatherForecastList.size(); i++){
+            Map prediction = (Map) weatherForecastList.get(i);
             WeatherCityModel model = new WeatherCityModel();
             model.setMain((Map<String, Double>) prediction.get("main"));
             ArrayList weatherArrayList = (ArrayList) prediction.get("weather");
@@ -71,17 +74,17 @@ public class AppManager {
         forecastJson = null;
     }
     public void clearJsonForecast(){
-        currentTownForcastJson = null;
-        destinationTownForcastJson = null;
+        currentTownForecastJson = null;
+        destinationTownForecastJson = null;
     }
 
-    public void clearListsOfWeatherForecast(){
+    private void clearListsOfWeatherForecast(){
         currentCityWeatherModelList.clear();
         destinationCityWeatherModelList.clear();
     }
 
-    public String prepareTimeOfTimeZone(String secoundsOffsetString){
-        Double secondsDouble = Double.valueOf(secoundsOffsetString);
+    public String prepareTimeOfTimeZone(String secondsOffsetString){
+        Double secondsDouble = Double.valueOf(secondsOffsetString);
         int secondsInt = secondsDouble.intValue();
 
         int hours = secondsInt / 3600;
@@ -95,4 +98,13 @@ public class AppManager {
 
         return zoneId;
     }
+
+    public List<WeatherCityModel> getCurrentCityWeatherModelList() {
+        return currentCityWeatherModelList;
+    }
+
+    public List<WeatherCityModel> getDestinationCityWeatherModelList() {
+        return destinationCityWeatherModelList;
+    }
+
 }

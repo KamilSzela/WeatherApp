@@ -65,4 +65,28 @@ public class ForecastBoxController extends BaseController implements Initializab
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
+
+    public ImageView getIconBox() {
+        return iconBox;
+    }
+
+    public Label getTemperatureLabel() {
+        return temperatureLabel;
+    }
+
+    public Label getPressureLabel() {
+        return pressureLabel;
+    }
+
+    public Label getHumidityLabel() {
+        return humidityLabel;
+    }
+
+    public Label getWindLabel() {
+        return windLabel;
+    }
+
+    public Label getDateLabel() {
+        return dateLabel;
+    }
 }

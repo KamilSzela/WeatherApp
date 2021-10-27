@@ -37,20 +37,20 @@
          </font></Label>
       <MenuBar layoutX="-2.0" layoutY="2.0" prefHeight="25.0" prefWidth="540.0">
         <menus>
-          <Menu mnemonicParsing="false" text="Plik">
+          <Menu fx:id="fileMenu" mnemonicParsing="false" text="Plik">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#closeApp" text="Zamknij" />
+              <MenuItem fx:id="closeAppMenuItem" mnemonicParsing="false" onAction="#closeApp" text="Zamknij" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Skórki">
+          <Menu fx:id="themesMenu" mnemonicParsing="false" text="Skórki">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#setDarkTheme" text="Styl ciemny" />
-                  <MenuItem mnemonicParsing="false" onAction="#setLightTheme" text="Styl jasny" />
+              <MenuItem fx:id="darkThemeMenuItem" mnemonicParsing="false" onAction="#setDarkTheme" text="Styl ciemny" />
+                  <MenuItem fx:id="lightThemeMenuItem" mnemonicParsing="false" onAction="#setLightTheme" text="Styl jasny" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="O Aplikacji">
+          <Menu fx:id="aboutMenu" mnemonicParsing="false" text="O Aplikacji">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#showAboutWindow" text="O Aplikacji" />
+              <MenuItem fx:id="showAboutMenuItem" mnemonicParsing="false" onAction="#showAboutWindow" text="O Aplikacji" />
             </items>
           </Menu>
         </menus>
