@@ -10,6 +10,7 @@ import pl.kamilszela.AppManager;
 import pl.kamilszela.model.WeatherCityModel;
 import pl.kamilszela.view.ViewFactory;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -40,8 +41,16 @@ public class OneDayForecastBoxController extends BaseController implements Initi
         String timeZoneSeconds = list.get(k).getCityData().get("timezone").toString();
         String timeZone = appManager.prepareTimeOfTimeZone(timeZoneSeconds);
         String fullLabelString = cityName + ", " + countryCode + "; " + dateForDisplay + ", strefa czasowa: " + timeZone;
-        cityDataLabel.setText(fullLabelString);
-        cityDataLabel.setTooltip(new Tooltip(fullLabelString));
+        String fullLabelWithCharset = "";
+        try {
+            fullLabelWithCharset = new String(fullLabelString.getBytes("UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            cityDataLabel.setText("System nie wspiera podanych znaków. Spróbuj użyć standardowego alfabetu " +
+                    "łacińskiego");
+        }
+        cityDataLabel.setText(fullLabelWithCharset);
+        cityDataLabel.setTooltip(new Tooltip(fullLabelWithCharset));
         if(counter > 4){
             viewFactory.showForecastInVBox(k, list, columnRight, false);
         } else {

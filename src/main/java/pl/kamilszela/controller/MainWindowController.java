@@ -14,6 +14,7 @@ import pl.kamilszela.controller.services.JsonDownloadService;
 import pl.kamilszela.view.ColorTheme;
 import pl.kamilszela.view.ViewFactory;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -48,18 +49,26 @@ public class MainWindowController extends BaseController implements Initializabl
         if(!sourceTown.getText().equals("") && !destinationTown.getText().equals("")){
             clearForecastFields();
             appManager.clearJsonForecast();
-            downloadCurrentTownForcast();
-            downloadDestinationTownForcast();
+            try{
+                downloadCurrentTownForcast();
+                downloadDestinationTownForcast();
+            } catch (UnsupportedEncodingException e) {
+                errorLabel.setText("Program nie wspiera podanego kodowania znaków.");
+            }
         } else {
             errorLabel.setText("Proszę wpisać obie nazwy miast w odpowiednie pola");
         }
     }
 
-    public void downloadCurrentTownForcast(){
-        downloadForecast(currentTownJsonDownloadService, sourceTown.getText());
+    public void downloadCurrentTownForcast() throws UnsupportedEncodingException {
+        String cityName = sourceTown.getText();
+        String cityNameForDownload = new String(cityName.getBytes("UTF-8"));
+        downloadForecast(currentTownJsonDownloadService, cityNameForDownload);
     }
-    public void downloadDestinationTownForcast(){
-        downloadForecast(destinationTownJsonDownloadService, destinationTown.getText());
+    public void downloadDestinationTownForcast() throws UnsupportedEncodingException {
+        String cityName = destinationTown.getText();
+        String cityNameForDownload = new String(cityName.getBytes("UTF-8"));
+        downloadForecast(destinationTownJsonDownloadService, cityNameForDownload);
     }
     public void downloadForecast(JsonDownloadService service, String cityName){
         service.setCityName(cityName);

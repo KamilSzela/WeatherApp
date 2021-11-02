@@ -140,6 +140,11 @@
     </dependency>
   </dependencies>
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <junit.version>5.7.2</junit.version>
+    <project.package.sourceEncoding>UTF-8</project.package.sourceEncoding>
+    <project.package.outputEncoding>UTF-8</project.package.outputEncoding>
+    <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
+    <project.shade.outputEncoding>UTF-8</project.shade.outputEncoding>
   </properties>
 </project>

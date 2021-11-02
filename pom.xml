@@ -10,6 +10,11 @@
 
     <properties>
         <junit.version>5.7.2</junit.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
+        <project.package.sourceEncoding>UTF-8</project.package.sourceEncoding>
+        <project.package.outputEncoding>UTF-8</project.package.outputEncoding>
+        <project.shade.outputEncoding>UTF-8</project.shade.outputEncoding>
     </properties>
 
     <dependencies>
