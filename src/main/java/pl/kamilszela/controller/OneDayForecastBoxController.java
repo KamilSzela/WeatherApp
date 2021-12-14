@@ -7,7 +7,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pl.kamilszela.AppManager;
-import pl.kamilszela.model.WeatherCityModel;
+import pl.kamilszela.model.OneDayWeatherCityModel;
 import pl.kamilszela.view.ViewFactory;
 
 import java.io.UnsupportedEncodingException;
@@ -33,7 +33,7 @@ public class OneDayForecastBoxController extends BaseController implements Initi
         activeStage.close();
     }
 
-    private void fillColumnsWithForecastData(List<WeatherCityModel> list, int k, int counter){
+    private void fillColumnsWithForecastData(List<OneDayWeatherCityModel> list, int k, int counter){
 
         String cityName = list.get(k).getCityData().get("name").toString();
         String countryCode = list.get(k).getCityData().get("country").toString();
@@ -58,7 +58,7 @@ public class OneDayForecastBoxController extends BaseController implements Initi
         }
     }
 
-    public void prepareForecastDataForOneDay(List<WeatherCityModel> list, int i){
+    public void prepareForecastDataForOneDay(List<OneDayWeatherCityModel> list, int i){
         String dateTime = list.get(i).getDt_txt();
         String date = dateTime.substring(0,10);
         int counter = 0;

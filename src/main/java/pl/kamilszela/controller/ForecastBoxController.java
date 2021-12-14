@@ -8,7 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import pl.kamilszela.AppManager;
-import pl.kamilszela.model.WeatherCityModel;
+import pl.kamilszela.model.OneDayWeatherCityModel;
 import pl.kamilszela.view.ViewFactory;
 
 import java.net.URL;
@@ -42,7 +42,7 @@ public class ForecastBoxController extends BaseController implements Initializab
         super(appManager, viewFactory);
     }
 
-    public void prepareForecastBox(int i, List<WeatherCityModel> list){
+    public void prepareForecastBox(int i, List<OneDayWeatherCityModel> list){
         Instant instant = list.get(i).getTimestamp().toInstant();
         String secondsOffset = list.get(i).getCityData().get("timezone").toString();
         String hoursOffset = appManager.prepareTimeOfTimeZone(secondsOffset);

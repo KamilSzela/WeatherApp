@@ -20,7 +20,7 @@ class AppManagerTest {
     void passedJsonDataShouldBeConvertedToTheList(){
         //given
         AppManager appManager = new AppManager();
-        appManager.setCurrentTownForcastJson(loadSampleJsonData());
+        appManager.setCurrentTownForecastJson(loadSampleJsonData());
         appManager.setDestinationTownForecastJson(loadSampleJsonData());
         //when
         appManager.setParametersInWeatherCityModel();
@@ -39,12 +39,12 @@ class AppManagerTest {
     void afterCallingClearJsonDataInAppManagerJsonStringsShouldBeNull(){
         //given
         AppManager appManager = new AppManager();
-        appManager.setCurrentTownForcastJson(loadSampleJsonData());
+        appManager.setCurrentTownForecastJson(loadSampleJsonData());
         appManager.setDestinationTownForecastJson(loadSampleJsonData());
         //when
         appManager.clearJsonForecast();
         //then
-        assertNull(appManager.getCurrentTownForcastJson());
+        assertNull(appManager.getCurrentTownForecastJson());
         assertNull(appManager.getDestinationTownForecastJson());
     }
     @Test
@@ -71,7 +71,7 @@ class AppManagerTest {
         AppManager appManager = new AppManager();
         //when
         appManager.setDestinationTownForecastJson("");
-        appManager.setCurrentTownForcastJson("");
+        appManager.setCurrentTownForecastJson("");
         //then
         assertThrows(IllegalArgumentException.class, () -> appManager.setParametersInWeatherCityModel());
     }

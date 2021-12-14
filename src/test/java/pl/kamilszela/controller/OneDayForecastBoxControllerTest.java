@@ -4,7 +4,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -22,7 +21,6 @@ import java.util.stream.Collectors;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class OneDayForecastBoxControllerTest extends ApplicationTest {
 
@@ -50,7 +48,7 @@ class OneDayForecastBoxControllerTest extends ApplicationTest {
         InputStream stream = OneDayForecastBoxControllerTest.class.getResourceAsStream("/jsonWeatherForecastExample" +
                 ".txt");
         String result = new BufferedReader(new InputStreamReader(stream)).lines().collect(Collectors.joining());
-        manager.setCurrentTownForcastJson(result);
+        manager.setCurrentTownForecastJson(result);
         manager.setDestinationTownForecastJson(result);
     }
 

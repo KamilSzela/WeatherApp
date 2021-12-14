@@ -7,7 +7,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import pl.kamilszela.AppManager;
 import pl.kamilszela.controller.*;
-import pl.kamilszela.model.WeatherCityModel;
+import pl.kamilszela.model.OneDayWeatherCityModel;
 
 import java.io.IOException;
 import java.util.List;
@@ -49,8 +49,8 @@ public class ViewFactory {
         }
     }
 
-    public void showForecastInVBox(int i, List<WeatherCityModel> list, Pane forecastField,
-                                    boolean clickForOneDayForecast) {
+    public void showForecastInVBox(int i, List<OneDayWeatherCityModel> list, Pane forecastField,
+                                   boolean clickForOneDayForecast) {
         ForecastBoxController controller = new ForecastBoxController(this.appManager, this);
         String fileName = "/fxml/forecastBox.fxml";
         Parent parent = loadFXMLFile(controller, fileName);
@@ -63,7 +63,7 @@ public class ViewFactory {
         forecastField.getChildren().add(parent);
     }
 
-    private void showForecastForOneDay(List<WeatherCityModel> list, int i){
+    private void showForecastForOneDay(List<OneDayWeatherCityModel> list, int i){
         OneDayForecastBoxController controller = new OneDayForecastBoxController(this.appManager, this);
         String fileName = "/fxml/oneDayForecastBox.fxml";
         Parent parent = loadFXMLFile(controller, fileName);

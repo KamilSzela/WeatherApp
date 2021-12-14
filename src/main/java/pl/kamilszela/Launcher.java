@@ -9,7 +9,7 @@ import pl.kamilszela.view.ViewFactory;
  */
 public class Launcher extends Application {
 
-    public AppManager appManager = new AppManager();
+    private final AppManager appManager = new AppManager();
 
     public static void main(String[] args) {
         launch(args);

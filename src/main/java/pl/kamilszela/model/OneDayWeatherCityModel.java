@@ -3,7 +3,7 @@ package pl.kamilszela.model;
 import java.sql.Timestamp;
 import java.util.Map;
 
-public class WeatherCityModel {
+public class OneDayWeatherCityModel {
     Map<String, Double> main = null;
     Map<String, String> weather = null;
     Map<String, Double> wind = null;
