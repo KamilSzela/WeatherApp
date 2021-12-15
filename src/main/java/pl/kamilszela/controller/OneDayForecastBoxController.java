@@ -12,6 +12,7 @@ import pl.kamilszela.view.ViewFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -39,8 +40,11 @@ public class OneDayForecastBoxController extends BaseController implements Initi
         String countryCode = list.get(k).getCityData().get("country").toString();
         String dateForDisplay = list.get(k).getDt_txt().substring(0,10);
         String timeZoneSeconds = list.get(k).getCityData().get("timezone").toString();
-        String timeZone = appManager.prepareTimeOfTimeZone(timeZoneSeconds);
-        String fullLabelString = cityName + ", " + countryCode + "; " + dateForDisplay + ", strefa czasowa: " + timeZone;
+        Double seconds = Double.parseDouble(timeZoneSeconds);
+        ZoneOffset offset = ZoneOffset.ofTotalSeconds(seconds.intValue());
+        String timeZone = offset.toString();
+        String fullLabelString =
+                cityName + ", " + countryCode + "; " + dateForDisplay + ", strefa czasowa: " + timeZone + " GMT";
         String fullLabelWithCharset = "";
         try {
             fullLabelWithCharset = new String(fullLabelString.getBytes("UTF-8"));
