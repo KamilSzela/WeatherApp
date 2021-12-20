@@ -6,12 +6,11 @@ public enum ColorTheme {
 
     public static String getStylesheetPath(ColorTheme colorTheme){
         switch (colorTheme){
-            case LIGHT:
-                return "/css/themeLight.css";
             case DARK:
                 return "/css/themeDark.css";
+            case LIGHT:
             default:
-                return null;
+                return "/css/themeLight.css";
         }
     }
 }
