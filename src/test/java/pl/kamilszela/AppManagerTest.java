@@ -47,24 +47,24 @@ class AppManagerTest {
         assertNull(appManager.getCurrentTownForecastJson());
         assertNull(appManager.getDestinationTownForecastJson());
     }
-    @Test
-    void passingPositiveValueOfSecondsShouldCreateTimeZoneWithPlusSign(){
-        //given
-        AppManager appManager = new AppManager();
-        //when
-        String timeZone = appManager.prepareTimeOfTimeZone("7200");
-        //then
-        assertThat(timeZone, equalTo("GMT+2"));
-    }
-    @Test
-    void passingNegativeValueOfSecondsShouldCreateTimeZoneWithMinusSign(){
-        //given
-        AppManager appManager = new AppManager();
-        //when
-        String timeZone = appManager.prepareTimeOfTimeZone("-7200");
-        //then
-        assertThat(timeZone, equalTo("GMT-2"));
-    }
+//    @Test
+//    void passingPositiveValueOfSecondsShouldCreateTimeZoneWithPlusSign(){
+//        //given
+//        AppManager appManager = new AppManager();
+//        //when
+//        String timeZone = appManager.prepareTimeOfTimeZone("7200");
+//        //then
+//        assertThat(timeZone, equalTo("GMT+2"));
+//    }
+//    @Test
+//    void passingNegativeValueOfSecondsShouldCreateTimeZoneWithMinusSign(){
+//        //given
+//        AppManager appManager = new AppManager();
+//        //when
+//        String timeZone = appManager.prepareTimeOfTimeZone("-7200");
+//        //then
+//        assertThat(timeZone, equalTo("GMT-2"));
+//    }
     @Test
     void shouldThrowIllegalArgumentExceptionWhenPassingEmptyJsonString(){
         //given

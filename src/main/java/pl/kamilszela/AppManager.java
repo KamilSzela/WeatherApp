@@ -84,21 +84,21 @@ public class AppManager {
         destinationCityWeatherModelList.clear();
     }
 
-    public String prepareTimeOfTimeZone(String secondsOffsetString) {
-        Double secondsDouble = Double.valueOf(secondsOffsetString);
-        int secondsInt = secondsDouble.intValue();
-
-        int hours = secondsInt / 3600;
-        String zoneId = "";
-
-        if (hours > 0) {
-            zoneId = "GMT+" + hours;
-        } else {
-            zoneId = "GMT" + hours;
-        }
-
-        return zoneId;
-    }
+//    public String prepareTimeOfTimeZone(String secondsOffsetString) {
+//        Double secondsDouble = Double.valueOf(secondsOffsetString);
+//        int secondsInt = secondsDouble.intValue();
+//
+//        int hours = secondsInt / 3600;
+//        String zoneId = "";
+//
+//        if (hours > 0) {
+//            zoneId = "GMT+" + hours;
+//        } else {
+//            zoneId = "GMT" + hours;
+//        }
+//
+//        return zoneId;
+//    }
 
     public List<OneDayWeatherCityModel> getCurrentCityWeatherModelList() {
         return currentCityWeatherModelList;

@@ -14,6 +14,7 @@ import pl.kamilszela.view.ViewFactory;
 import java.net.URL;
 import java.time.Instant;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -45,8 +46,11 @@ public class ForecastBoxController extends BaseController implements Initializab
     public void prepareForecastBox(int i, List<OneDayWeatherCityModel> list){
         Instant instant = list.get(i).getTimestamp().toInstant();
         String secondsOffset = list.get(i).getCityData().get("timezone").toString();
-        String hoursOffset = appManager.prepareTimeOfTimeZone(secondsOffset);
-        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(instant, ZoneId.of(hoursOffset));
+        Double secondsOffsetDouble = Double.parseDouble(secondsOffset);
+        ZoneOffset offset = ZoneOffset.ofTotalSeconds(secondsOffsetDouble.intValue());
+        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(instant, ZoneId.ofOffset("GMT", offset));
+        //String hoursOffset = appManager.prepareTimeOfTimeZone(secondsOffset);
+        //ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(instant, ZoneId.of(hoursOffset));
         dateLabel.setText(zonedDateTime.toString().substring(0,10) + " " + zonedDateTime.getHour() + ":00");
         Double temperature = list.get(i).getMain().get("temp");
         temperatureLabel.setText(temperature.toString() + " " + degreeSign + "C");
