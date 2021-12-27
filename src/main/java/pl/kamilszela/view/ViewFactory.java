@@ -21,6 +21,8 @@ public class ViewFactory {
     public static final String ONE_DAY_STAGE_TITLE = "Pogoda na wybrany dzień";
     public static final String ABOUT_WINDOW_FXML = "/fxml/aboutWindow.fxml";
     public static final String ABOUT_WINDOW_TITLE = "Opis aplikacji";
+    public static final int NUMBER_OF_FORECAST_POINTS_FOR_ONE_DAY = 8;
+    public static final int SECOND_LAST_ELEMENT_IN_FORECAST_LIST = 38;
     private AppManager appManager;
 
     private ColorTheme colorTheme = ColorTheme.LIGHT;
@@ -43,47 +45,47 @@ public class ViewFactory {
         int size = appManager.currentCityWeatherModelList.size();
         if(appManager.currentCityWeatherModelList.size() > 0 && appManager.destinationCityWeatherModelList.size() > 0){
             for(int i = 0; i < size; i++){
-                if(counter == 8){
+                if(counter == NUMBER_OF_FORECAST_POINTS_FOR_ONE_DAY){
                     showForecastInVBox(i,  appManager.destinationCityWeatherModelList, destinationForecastField, true);
                     showForecastInVBox(i,  appManager.currentCityWeatherModelList, sourceTownForecastField, true);
                     counter = 0;
                 }
                 counter++;
-                if(i == 38){
+                if(i == SECOND_LAST_ELEMENT_IN_FORECAST_LIST){
                     counter++;
                 }
             }
         }
     }
 
-    public void showForecastInVBox(int i, List<OneDayWeatherCityModel> list, Pane forecastField,
+    public void showForecastInVBox(int listPositionNumberOfForecastElement, List<OneDayWeatherCityModel> list, Pane forecastField,
                                    boolean clickForOneDayForecast) {
         ForecastBoxController controller = new ForecastBoxController(this.appManager, this);
         String fileName = FORECAST_BOX_FXML;
         Parent parent = loadFXMLFile(controller, fileName);
-        controller.prepareForecastBox(i,list);
+        controller.prepareForecastBox(listPositionNumberOfForecastElement,list);
         if(clickForOneDayForecast){
             parent.setOnMouseClicked(e->{
-                showForecastForOneDay(list, i);
+                showForecastForOneDay(list, listPositionNumberOfForecastElement);
             });
         }
         forecastField.getChildren().add(parent);
     }
 
-    private void showForecastForOneDay(List<OneDayWeatherCityModel> list, int i) {
+    private void showForecastForOneDay(List<OneDayWeatherCityModel> list, int listPositionNumberOfForecastElement) {
         OneDayForecastBoxController controller = new OneDayForecastBoxController(this.appManager, this);
         String fileName = ONE_DAY_FORECAST_BOX_FXML;
         Parent parent = loadFXMLFile(controller, fileName);
-        controller.prepareForecastDataForOneDay(list, i);
+        controller.prepareForecastDataForOneDay(list, listPositionNumberOfForecastElement);
         showStage(ONE_DAY_STAGE_TITLE, parent, false, true);
     }
 
-    private void showStage(String title, Parent parent, boolean resiable, boolean onTop) {
+    private void showStage(String title, Parent parent, boolean resizable, boolean onTop) {
         Scene scene = new Scene(parent);
         updateStyle(scene);
         Stage stage = new Stage();
         stage.setTitle(title);
-        stage.setResizable(resiable);
+        stage.setResizable(resizable);
         stage.setAlwaysOnTop(onTop);
         stage.setScene(scene);
         stage.show();
@@ -104,10 +106,6 @@ public class ViewFactory {
     public void updateStyle(Scene scene) {
         scene.getStylesheets().clear();
         scene.getStylesheets().add(getClass().getResource(ColorTheme.getStylesheetPath(colorTheme)).toExternalForm());
-    }
-
-    public ColorTheme getColorTheme() {
-        return colorTheme;
     }
 
     public void setColorTheme(ColorTheme colorTheme) {

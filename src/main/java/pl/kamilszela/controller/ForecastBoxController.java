@@ -37,30 +37,30 @@ public class ForecastBoxController extends BaseController implements Initializab
     private AnchorPane forecastBox;
     @FXML
     private HBox forecastBoxInnerBox;
-    private char degreeSign = 176;
+    private static final char DEGREE_SIGN = 176;
 
     public ForecastBoxController(AppManager appManager, ViewFactory viewFactory) {
         super(appManager, viewFactory);
     }
 
-    public void prepareForecastBox(int i, List<OneDayWeatherCityModel> list){
-        Instant instant = list.get(i).getTimestamp().toInstant();
-        String secondsOffset = list.get(i).getCityData().get("timezone").toString();
+    public void prepareForecastBox(int forecastElementNumber, List<OneDayWeatherCityModel> list){
+        Instant instant = list.get(forecastElementNumber).getTimestamp().toInstant();
+        String secondsOffset = list.get(forecastElementNumber).getCityData().get("timezone").toString();
         Double secondsOffsetDouble = Double.parseDouble(secondsOffset);
         ZoneOffset offset = ZoneOffset.ofTotalSeconds(secondsOffsetDouble.intValue());
         ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(instant, ZoneId.ofOffset("GMT", offset));
         //String hoursOffset = appManager.prepareTimeOfTimeZone(secondsOffset);
         //ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(instant, ZoneId.of(hoursOffset));
         dateLabel.setText(zonedDateTime.toString().substring(0,10) + " " + zonedDateTime.getHour() + ":00");
-        Double temperature = list.get(i).getMain().get("temp");
-        temperatureLabel.setText(temperature.toString() + " " + degreeSign + "C");
-        Double pressure = list.get(i).getMain().get("pressure");
+        Double temperature = list.get(forecastElementNumber).getMain().get("temp");
+        temperatureLabel.setText(temperature.toString() + " " + DEGREE_SIGN + "C");
+        Double pressure = list.get(forecastElementNumber).getMain().get("pressure");
         pressureLabel.setText(pressure + " hPa");
-        Double humidity = list.get(i).getMain().get("humidity");
+        Double humidity = list.get(forecastElementNumber).getMain().get("humidity");
         humidityLabel.setText(humidity.toString() + "%");
-        Double windSpeed = list.get(i).getWind().get("speed");
+        Double windSpeed = list.get(forecastElementNumber).getWind().get("speed");
         windLabel.setText(windSpeed.toString() + " m/s");
-        String iconName = list.get(i).getWeather().get("icon");
+        String iconName = list.get(forecastElementNumber).getWeather().get("icon");
         String path = "/icons/" + iconName + ".png";
         Image icon = new Image(String.valueOf(this.getClass().getResource(path)));
         iconBox.setImage(icon);
