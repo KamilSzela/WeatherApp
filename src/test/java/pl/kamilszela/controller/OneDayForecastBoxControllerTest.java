@@ -94,7 +94,8 @@ class OneDayForecastBoxControllerTest extends ApplicationTest {
                 String countryCode =
                         manager.getCurrentCityWeatherModelList().get(3).getCityData().get("country").toString();
                 String date = manager.getCurrentCityWeatherModelList().get(3).getDt_txt().substring(0,10);
-                String expectedLabelContent = townName + ", " + countryCode + "; " + date + ", strefa czasowa: GMT+2";
+                String expectedLabelContent = townName + ", " + countryCode + "; " + date + ", strefa czasowa: +02:00" +
+                        " GMT";
                 //then
                 assertThat(controller.getCityDataLabel().getText(), equalTo(expectedLabelContent));
             }
