@@ -25,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class OneDayForecastBoxControllerTest extends ApplicationTest {
 
+    public static final int NUMBER_OF_MINIMAL_RECORDS_FOR_ONE_DAY_FORECAST = 8;
     AppManager manager;
     ViewFactory factory;
     OneDayForecastBoxController controller;
@@ -36,7 +37,7 @@ class OneDayForecastBoxControllerTest extends ApplicationTest {
         controller = new OneDayForecastBoxController(manager, factory);
         setSampleJsonInAppManager(manager);
         manager.setParametersInWeatherCityModel();
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/oneDayForeCastBox.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/oneDayForecastBox.fxml"));
         loader.setController(controller);
         Parent mainNode = loader.load();
 
@@ -60,7 +61,7 @@ class OneDayForecastBoxControllerTest extends ApplicationTest {
             @Override
             public void run() {
                 //when
-                controller.prepareForecastDataForOneDay(manager.getCurrentCityWeatherModelList(), 8);
+                controller.prepareForecastDataForOneDay(manager.getCurrentCityWeatherModelList(), NUMBER_OF_MINIMAL_RECORDS_FOR_ONE_DAY_FORECAST);
                 WaitForAsyncUtils.waitForFxEvents();
                 //then
                 assertThat(controller.getColumnLeft().getChildren().size(), equalTo(4));
@@ -77,7 +78,8 @@ class OneDayForecastBoxControllerTest extends ApplicationTest {
             public void run() {
                 //then
                 assertThrows(IllegalArgumentException.class,
-                        () -> controller.prepareForecastDataForOneDay(manager.getCurrentCityWeatherModelList(), 7));
+                        () -> controller.prepareForecastDataForOneDay(manager.getCurrentCityWeatherModelList(),
+                                NUMBER_OF_MINIMAL_RECORDS_FOR_ONE_DAY_FORECAST - 1));
             }
         });
     }
@@ -88,7 +90,7 @@ class OneDayForecastBoxControllerTest extends ApplicationTest {
             @Override
             public void run() {
                 //when
-                controller.prepareForecastDataForOneDay(manager.getCurrentCityWeatherModelList(), 8);
+                controller.prepareForecastDataForOneDay(manager.getCurrentCityWeatherModelList(), NUMBER_OF_MINIMAL_RECORDS_FOR_ONE_DAY_FORECAST);
                 WaitForAsyncUtils.waitForFxEvents();
                 //then
                 assertThat(controller.getColumnRight().getChildren().get(0).getOnMouseClicked(), nullValue());
@@ -102,7 +104,7 @@ class OneDayForecastBoxControllerTest extends ApplicationTest {
             @Override
             public void run() {
                 //when
-                controller.prepareForecastDataForOneDay(manager.getCurrentCityWeatherModelList(), 8);
+                controller.prepareForecastDataForOneDay(manager.getCurrentCityWeatherModelList(), NUMBER_OF_MINIMAL_RECORDS_FOR_ONE_DAY_FORECAST);
                 WaitForAsyncUtils.waitForFxEvents();
                 String townName = manager.getCurrentCityWeatherModelList().get(3).getCityData().get("name").toString();
                 String countryCode =

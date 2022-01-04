@@ -7,6 +7,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import pl.kamilszela.AppManager;
 import pl.kamilszela.controller.*;
+import pl.kamilszela.controller.services.CurrentTownJsonDownloadService;
+import pl.kamilszela.controller.services.DestinationTownJsonDownloadService;
 import pl.kamilszela.model.OneDayWeatherCityModel;
 
 import java.io.IOException;
@@ -32,7 +34,8 @@ public class ViewFactory {
     }
 
     public void showMainWindow() {
-        BaseController controller = new MainWindowController(appManager, this);
+        BaseController controller = new MainWindowController(appManager, this,
+                new CurrentTownJsonDownloadService(appManager), new DestinationTownJsonDownloadService(appManager));
         String fileName = MAIN_WINDOW_FXML_FILE_NAME;
 
         Parent parent = loadFXMLFile(controller, fileName);

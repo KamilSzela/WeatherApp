@@ -25,13 +25,11 @@ public class MainWindowController extends BaseController implements Initializabl
     public static final String ERROR_TEXT_GENERIC_TEXT = "Wystąpił niespodziewany błąd";
     public static final String INITIAL_SOURCE_CITY_NAME = "Warszawa";
     public static final String INITIAL_DESTINATION_CITY_NAME = "Madryt";
-    public static final String ERROR_TEXT_INCOMPITABLE_ENCODING = "Program nie wspiera podanego kodowania znaków.";
+    public static final String ERROR_TEXT_INCOMPATIBLE_ENCODING = "Program nie wspiera podanego kodowania znaków.";
     public static final String ERROR_TEXT_EMPTY_TOWN_TEXT_FIELD = "Proszę wpisać obie nazwy miast w odpowiednie pola";
 
-    private JsonDownloadService currentTownJsonDownloadService =
-            new CurrentTownJsonDownloadService(appManager);
-    private JsonDownloadService destinationTownJsonDownloadService =
-            new DestinationTownJsonDownloadService(appManager);
+    private JsonDownloadService currentTownJsonDownloadService;
+    private JsonDownloadService destinationTownJsonDownloadService;
 
     @FXML
     private VBox sourceTownForecastField;
@@ -48,8 +46,11 @@ public class MainWindowController extends BaseController implements Initializabl
     @FXML
     private Label errorLabel;
 
-    public MainWindowController(AppManager appManager, ViewFactory viewFactory){
+    public MainWindowController(AppManager appManager, ViewFactory viewFactory,
+                                JsonDownloadService currentTownService, JsonDownloadService destinationTownService){
         super(appManager, viewFactory);
+        this.currentTownJsonDownloadService = currentTownService;
+        this.destinationTownJsonDownloadService = destinationTownService;
     }
 
     @FXML
@@ -61,7 +62,7 @@ public class MainWindowController extends BaseController implements Initializabl
                 downloadCurrentTownForecast();
                 downloadDestinationTownForecast();
             } catch (UnsupportedEncodingException e) {
-                errorLabel.setText(ERROR_TEXT_INCOMPITABLE_ENCODING);
+                errorLabel.setText(ERROR_TEXT_INCOMPATIBLE_ENCODING);
             }
         } else {
             errorLabel.setText(ERROR_TEXT_EMPTY_TOWN_TEXT_FIELD);

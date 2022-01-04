@@ -69,13 +69,6 @@ public class AppManager {
                     element.getDt_txt(),
                     cityData,
                     dateTimeStamp);
-//            model.setCityData(cityData);
-//            model.setMain(element.getMain());
-//            model.setWeather(element.getWeather().get(0));
-//            model.setWind(element.getWind());
-//            model.setDt_txt(element.getDt_txt());
-//
-//            model.setTimestamp(dateTimeStamp);
             list.add(model);
         }
 

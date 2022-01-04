@@ -61,7 +61,7 @@ public abstract class JsonDownloadService extends Service<JsonDownloadResult> {
         };
     }
 
-    public void setForecastInAppManager(){}
+    public abstract void setForecastInAppManager();
 
     public String getDownloadedJson(){
         return this.downloadedJson;
