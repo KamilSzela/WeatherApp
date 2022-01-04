@@ -69,6 +69,9 @@ public class OneDayForecastBoxController extends BaseController {
             numberPositionOfElementRecord++;
         }
         int positionNumberOfFirstRecord = numberPositionOfElementRecord - NUMBER_OF_RECORDS_FOR_ONE_DAY;
+        if (positionNumberOfFirstRecord < 0) {
+            throw new IllegalArgumentException("Index of first record of element cannot be negative.");
+        }
         int counter = 0;
         for(int k = positionNumberOfFirstRecord; k < numberPositionOfElementRecord; k++){
             counter++;

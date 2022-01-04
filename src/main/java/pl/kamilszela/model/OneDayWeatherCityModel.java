@@ -4,12 +4,21 @@ import java.sql.Timestamp;
 import java.util.Map;
 
 public class OneDayWeatherCityModel {
-    Map<String, Double> main = null;
-    Map<String, String> weather = null;
-    Map<String, Double> wind = null;
-    String dt_txt = null;
-    Map<String, Object> cityData = null;
-    Timestamp timestamp = null;
+    private Map<String, Double> main = null;
+    private Map<String, String> weather = null;
+    private Map<String, Double> wind = null;
+    private String dt_txt = null;
+    private Map<String, Object> cityData = null;
+    private Timestamp timestamp = null;
+
+    public OneDayWeatherCityModel(Map<String, Double> main, Map<String, String> weather, Map<String, Double> wind, String dt_txt, Map<String, Object> cityData, Timestamp timestamp) {
+        this.main = main;
+        this.weather = weather;
+        this.wind = wind;
+        this.dt_txt = dt_txt;
+        this.cityData = cityData;
+        this.timestamp = timestamp;
+    }
 
     public Map<String, Double> getMain() {
         return main;

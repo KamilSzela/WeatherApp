@@ -60,15 +60,22 @@ public class AppManager {
         Map<String, Object> cityData = fullCityForecast.getCity();
 
         for(ForecastListElement element: forecastListFor5Days){
-            OneDayWeatherCityModel model = new OneDayWeatherCityModel();
-            model.setCityData(cityData);
-            model.setMain(element.getMain());
-            model.setWeather(element.getWeather().get(0));
-            model.setWind(element.getWind());
-            model.setDt_txt(element.getDt_txt());
+
             long timeStampDouble = element.getDt() * 1000;
             Timestamp dateTimeStamp = new Timestamp(timeStampDouble);
-            model.setTimestamp(dateTimeStamp);
+            OneDayWeatherCityModel model = new OneDayWeatherCityModel(element.getMain(),
+                    element.getWeather().get(0),
+                    element.getWind(),
+                    element.getDt_txt(),
+                    cityData,
+                    dateTimeStamp);
+//            model.setCityData(cityData);
+//            model.setMain(element.getMain());
+//            model.setWeather(element.getWeather().get(0));
+//            model.setWind(element.getWind());
+//            model.setDt_txt(element.getDt_txt());
+//
+//            model.setTimestamp(dateTimeStamp);
             list.add(model);
         }
 

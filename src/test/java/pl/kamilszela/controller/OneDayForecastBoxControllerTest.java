@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class OneDayForecastBoxControllerTest extends ApplicationTest {
 
@@ -59,11 +60,24 @@ class OneDayForecastBoxControllerTest extends ApplicationTest {
             @Override
             public void run() {
                 //when
-                controller.prepareForecastDataForOneDay(manager.getCurrentCityWeatherModelList(), 3);
+                controller.prepareForecastDataForOneDay(manager.getCurrentCityWeatherModelList(), 8);
                 WaitForAsyncUtils.waitForFxEvents();
                 //then
                 assertThat(controller.getColumnLeft().getChildren().size(), equalTo(4));
                 assertThat(controller.getColumnRight().getChildren().size(), equalTo(4));
+            }
+        });
+    }
+    @Test
+    void shouldThrowIllegalArgumentExceptionWhenPositionOfElementRecordIsBelowEight(){
+        //given
+        //when
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                //then
+                assertThrows(IllegalArgumentException.class,
+                        () -> controller.prepareForecastDataForOneDay(manager.getCurrentCityWeatherModelList(), 7));
             }
         });
     }
@@ -74,7 +88,7 @@ class OneDayForecastBoxControllerTest extends ApplicationTest {
             @Override
             public void run() {
                 //when
-                controller.prepareForecastDataForOneDay(manager.getCurrentCityWeatherModelList(), 3);
+                controller.prepareForecastDataForOneDay(manager.getCurrentCityWeatherModelList(), 8);
                 WaitForAsyncUtils.waitForFxEvents();
                 //then
                 assertThat(controller.getColumnRight().getChildren().get(0).getOnMouseClicked(), nullValue());
@@ -88,7 +102,7 @@ class OneDayForecastBoxControllerTest extends ApplicationTest {
             @Override
             public void run() {
                 //when
-                controller.prepareForecastDataForOneDay(manager.getCurrentCityWeatherModelList(), 3);
+                controller.prepareForecastDataForOneDay(manager.getCurrentCityWeatherModelList(), 8);
                 WaitForAsyncUtils.waitForFxEvents();
                 String townName = manager.getCurrentCityWeatherModelList().get(3).getCityData().get("name").toString();
                 String countryCode =

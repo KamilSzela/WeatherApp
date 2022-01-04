@@ -16,9 +16,17 @@ import pl.kamilszela.view.ViewFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ResourceBundle;
 
 public class MainWindowController extends BaseController implements Initializable {
+
+    public static final String ERROR_TEXT_MALFORMED_URL = "Znaleziono błąd w adresie URL";
+    public static final String ERROR_TEXT_GENERIC_TEXT = "Wystąpił niespodziewany błąd";
+    public static final String INITIAL_SOURCE_CITY_NAME = "Warszawa";
+    public static final String INITIAL_DESTINATION_CITY_NAME = "Madryt";
+    public static final String ERROR_TEXT_INCOMPITABLE_ENCODING = "Program nie wspiera podanego kodowania znaków.";
+    public static final String ERROR_TEXT_EMPTY_TOWN_TEXT_FIELD = "Proszę wpisać obie nazwy miast w odpowiednie pola";
 
     private JsonDownloadService currentTownJsonDownloadService =
             new CurrentTownJsonDownloadService(appManager);
@@ -26,10 +34,10 @@ public class MainWindowController extends BaseController implements Initializabl
             new DestinationTownJsonDownloadService(appManager);
 
     @FXML
-    private VBox sourceTownForcastField;
+    private VBox sourceTownForecastField;
 
     @FXML
-    private VBox destinationForcastField;
+    private VBox destinationForecastField;
 
     @FXML
     private TextField sourceTown;
@@ -45,29 +53,29 @@ public class MainWindowController extends BaseController implements Initializabl
     }
 
     @FXML
-    public void generateForcastAction() {
+    public void generateForecastAction() {
         if(!sourceTown.getText().equals("") && !destinationTown.getText().equals("")){
             clearForecastFields();
             appManager.clearJsonForecast();
             try{
-                downloadCurrentTownForcast();
-                downloadDestinationTownForcast();
+                downloadCurrentTownForecast();
+                downloadDestinationTownForecast();
             } catch (UnsupportedEncodingException e) {
-                errorLabel.setText("Program nie wspiera podanego kodowania znaków.");
+                errorLabel.setText(ERROR_TEXT_INCOMPITABLE_ENCODING);
             }
         } else {
-            errorLabel.setText("Proszę wpisać obie nazwy miast w odpowiednie pola");
+            errorLabel.setText(ERROR_TEXT_EMPTY_TOWN_TEXT_FIELD);
         }
     }
 
-    public void downloadCurrentTownForcast() throws UnsupportedEncodingException {
+    public void downloadCurrentTownForecast() throws UnsupportedEncodingException {
         String cityName = sourceTown.getText();
-        String cityNameForDownload = new String(cityName.getBytes("UTF-8"));
+        String cityNameForDownload = new String(cityName.getBytes(StandardCharsets.UTF_8));
         downloadForecast(currentTownJsonDownloadService, cityNameForDownload);
     }
-    public void downloadDestinationTownForcast() throws UnsupportedEncodingException {
+    public void downloadDestinationTownForecast() throws UnsupportedEncodingException {
         String cityName = destinationTown.getText();
-        String cityNameForDownload = new String(cityName.getBytes("UTF-8"));
+        String cityNameForDownload = new String(cityName.getBytes(StandardCharsets.UTF_8));
         downloadForecast(destinationTownJsonDownloadService, cityNameForDownload);
     }
     public void downloadForecast(JsonDownloadService service, String cityName){
@@ -76,20 +84,20 @@ public class MainWindowController extends BaseController implements Initializabl
         service.restart();
 
         service.setOnSucceeded(e -> {
-            JsonDownloadResult result = (JsonDownloadResult) service.getValue();
+            JsonDownloadResult result = service.getValue();
             switch (result){
                 case SUCCESS:
                     service.setForecastInAppManager();
                     appManager.setParametersInWeatherCityModel();
                     this.errorLabel.setText("");
-                    viewFactory.prepareForecastPanel(destinationForcastField, sourceTownForcastField);
-                    return;
+                    viewFactory.prepareForecastPanel(destinationForecastField, sourceTownForecastField);
+                    break;
                 case FAILED_BY_MALFORMED_URL:
-                    this.errorLabel.setText("Znaleziono błąd w adresie URL");
-                    return;
+                    this.errorLabel.setText(ERROR_TEXT_MALFORMED_URL);
+                    break;
                 case FAILED_BY_UNEXPECTED_ERROR:
-                    this.errorLabel.setText("Wystąpił niespodziewany błąd");
-                    return;
+                    this.errorLabel.setText(ERROR_TEXT_GENERIC_TEXT);
+                    break;
             }
         });
 
@@ -118,8 +126,8 @@ public class MainWindowController extends BaseController implements Initializabl
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.sourceTown.setText("Warszawa");
-        this.destinationTown.setText("Madryt");
+        this.sourceTown.setText(INITIAL_SOURCE_CITY_NAME);
+        this.destinationTown.setText(INITIAL_DESTINATION_CITY_NAME);
         setUpForecastFields();
     }
 
@@ -133,8 +141,8 @@ public class MainWindowController extends BaseController implements Initializabl
     }
 
     private void clearForecastFields() {
-        destinationForcastField.getChildren().clear();
-        sourceTownForcastField.getChildren().clear();
+        destinationForecastField.getChildren().clear();
+        sourceTownForecastField.getChildren().clear();
     }
     private Scene getScene(){
         return this.errorLabel.getScene();
@@ -152,11 +160,11 @@ public class MainWindowController extends BaseController implements Initializabl
         return errorLabel;
     }
 
-    public VBox getSourceTownForcastField() {
-        return sourceTownForcastField;
+    public VBox getSourceTownForecastField() {
+        return sourceTownForecastField;
     }
 
-    public VBox getDestinationForcastField() {
-        return destinationForcastField;
+    public VBox getDestinationForecastField() {
+        return destinationForecastField;
     }
 }

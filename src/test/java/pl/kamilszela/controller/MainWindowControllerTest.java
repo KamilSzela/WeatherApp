@@ -6,9 +6,6 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
-import org.testfx.api.FxAssert;
-import org.testfx.api.FxService;
-import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.framework.junit5.Start;
 import org.testfx.util.WaitForAsyncUtils;
@@ -77,7 +74,7 @@ class MainWindowControllerTest extends ApplicationTest {
         clickOn(".button", MouseButton.PRIMARY);
         sleep(500);
         //then
-        verify(factory, times(2)).prepareForecastPanel(controller.getDestinationForcastField(), controller.getSourceTownForcastField());
+        verify(factory, times(2)).prepareForecastPanel(controller.getDestinationForecastField(), controller.getSourceTownForecastField());
     }
     @Test
     void clickingOnDarkThemeMenuItemShouldSetDarkTheme(){

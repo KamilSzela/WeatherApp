@@ -12,7 +12,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public abstract class JsonDownloadService extends Service {
+public abstract class JsonDownloadService extends Service<JsonDownloadResult> {
 
     public String cityName;
     public AppManager appManager;
