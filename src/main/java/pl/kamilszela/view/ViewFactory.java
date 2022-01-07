@@ -35,7 +35,8 @@ public class ViewFactory {
 
     public void showMainWindow() {
         BaseController controller = new MainWindowController(appManager, this,
-                new CurrentTownJsonDownloadService(appManager), new DestinationTownJsonDownloadService(appManager));
+                new CurrentTownJsonDownloadService(appManager),
+                new DestinationTownJsonDownloadService(appManager));
         String fileName = MAIN_WINDOW_FXML_FILE_NAME;
 
         Parent parent = loadFXMLFile(controller, fileName);

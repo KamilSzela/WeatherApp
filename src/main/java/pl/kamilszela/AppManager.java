@@ -3,6 +3,7 @@ package pl.kamilszela;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import javafx.collections.FXCollections;
+import pl.kamilszela.controller.CityType;
 import pl.kamilszela.controller.ForecastBoxController;
 import pl.kamilszela.model.ForecastListElement;
 import pl.kamilszela.model.FullWeatherCityModel;
@@ -37,17 +38,22 @@ public class AppManager {
         this.destinationTownForecastJson = destinationTownForecastJson;
     }
 
-    public void setParametersInWeatherCityModel() {
+    public void setParametersInWeatherCityModel(String downloadedJson, CityType typeOfCity) {
         if (currentCityWeatherModelList.size() > 0 && destinationCityWeatherModelList.size() > 0) {
             clearListsOfWeatherForecast();
         }
-
-        if (currentTownForecastJson != null && destinationTownForecastJson != null) {
-            if (currentTownForecastJson.equals("") || destinationTownForecastJson.equals("")) {
-                throw new IllegalArgumentException("Json data empty");
+        if(downloadedJson != null){
+            if(downloadedJson.equals("")){
+                throw new IllegalArgumentException("JSON data empty");
             } else {
-                setUpListWithPredictionModel(currentCityWeatherModelList, currentTownForecastJson);
-                setUpListWithPredictionModel(destinationCityWeatherModelList, destinationTownForecastJson);
+                switch (typeOfCity) {
+                    case CURRENT_CITY:
+                        setUpListWithPredictionModel(currentCityWeatherModelList, downloadedJson);
+                        break;
+                    case DESTINATION_CITY:
+                        setUpListWithPredictionModel(destinationCityWeatherModelList, downloadedJson);
+                        break;
+                }
             }
         }
 
@@ -83,22 +89,6 @@ public class AppManager {
         currentCityWeatherModelList.clear();
         destinationCityWeatherModelList.clear();
     }
-
-//    public String prepareTimeOfTimeZone(String secondsOffsetString) {
-//        Double secondsDouble = Double.valueOf(secondsOffsetString);
-//        int secondsInt = secondsDouble.intValue();
-//
-//        int hours = secondsInt / 3600;
-//        String zoneId = "";
-//
-//        if (hours > 0) {
-//            zoneId = "GMT+" + hours;
-//        } else {
-//            zoneId = "GMT" + hours;
-//        }
-//
-//        return zoneId;
-//    }
 
     public List<OneDayWeatherCityModel> getCurrentCityWeatherModelList() {
         return currentCityWeatherModelList;

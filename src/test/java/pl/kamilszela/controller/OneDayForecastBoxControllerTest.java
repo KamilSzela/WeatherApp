@@ -31,12 +31,12 @@ class OneDayForecastBoxControllerTest extends ApplicationTest {
     OneDayForecastBoxController controller;
 
     @Start
-    public void start(Stage stage) throws Exception{
+    public void start(Stage stage) throws Exception {
         manager = new AppManager();
         factory = new ViewFactory(manager);
         controller = new OneDayForecastBoxController(manager, factory);
-        setSampleJsonInAppManager(manager);
-        manager.setParametersInWeatherCityModel();
+        manager.setParametersInWeatherCityModel(loadSampleJsonData(), CityType.CURRENT_CITY);
+        manager.setParametersInWeatherCityModel(loadSampleJsonData(), CityType.DESTINATION_CITY);
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/oneDayForecastBox.fxml"));
         loader.setController(controller);
         Parent mainNode = loader.load();
@@ -46,12 +46,11 @@ class OneDayForecastBoxControllerTest extends ApplicationTest {
         stage.toFront();
     }
 
-    private void setSampleJsonInAppManager(AppManager manager) throws IOException {
+    private String loadSampleJsonData(){
         InputStream stream = OneDayForecastBoxControllerTest.class.getResourceAsStream("/jsonWeatherForecastExample" +
                 ".txt");
         String result = new BufferedReader(new InputStreamReader(stream)).lines().collect(Collectors.joining());
-        manager.setCurrentTownForecastJson(result);
-        manager.setDestinationTownForecastJson(result);
+        return result;
     }
 
     @Test

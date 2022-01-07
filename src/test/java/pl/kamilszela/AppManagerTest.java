@@ -1,6 +1,7 @@
 package pl.kamilszela;
 
 import org.junit.jupiter.api.Test;
+import pl.kamilszela.controller.CityType;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -20,11 +21,9 @@ class AppManagerTest {
     void passedJsonDataShouldBeConvertedToTheList(){
         //given
         AppManager appManager = new AppManager();
-        appManager.setCurrentTownForecastJson(loadSampleJsonData());
-        appManager.setDestinationTownForecastJson(loadSampleJsonData());
         //when
-        appManager.setParametersInWeatherCityModel();
-        appManager.setParametersInWeatherCityModel();
+        appManager.setParametersInWeatherCityModel(loadSampleJsonData(), CityType.CURRENT_CITY);
+        appManager.setParametersInWeatherCityModel(loadSampleJsonData(), CityType.DESTINATION_CITY);
         //then
         assertThat(appManager.getCurrentCityWeatherModelList().size(), equalTo(40));
         assertThat(appManager.getDestinationCityWeatherModelList().size(), equalTo(40));
@@ -47,24 +46,6 @@ class AppManagerTest {
         assertNull(appManager.getCurrentTownForecastJson());
         assertNull(appManager.getDestinationTownForecastJson());
     }
-//    @Test
-//    void passingPositiveValueOfSecondsShouldCreateTimeZoneWithPlusSign(){
-//        //given
-//        AppManager appManager = new AppManager();
-//        //when
-//        String timeZone = appManager.prepareTimeOfTimeZone("7200");
-//        //then
-//        assertThat(timeZone, equalTo("GMT+2"));
-//    }
-//    @Test
-//    void passingNegativeValueOfSecondsShouldCreateTimeZoneWithMinusSign(){
-//        //given
-//        AppManager appManager = new AppManager();
-//        //when
-//        String timeZone = appManager.prepareTimeOfTimeZone("-7200");
-//        //then
-//        assertThat(timeZone, equalTo("GMT-2"));
-//    }
     @Test
     void shouldThrowIllegalArgumentExceptionWhenPassingEmptyJsonString(){
         //given
@@ -73,7 +54,7 @@ class AppManagerTest {
         appManager.setDestinationTownForecastJson("");
         appManager.setCurrentTownForecastJson("");
         //then
-        assertThrows(IllegalArgumentException.class, () -> appManager.setParametersInWeatherCityModel());
+        assertThrows(IllegalArgumentException.class, () -> appManager.setParametersInWeatherCityModel("", CityType.DESTINATION_CITY));
     }
     private String loadSampleJsonData(){
         InputStream stream = AppManager.class.getResourceAsStream("/jsonWeatherForecastExample" +

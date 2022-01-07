@@ -27,6 +27,7 @@ class MainWindowControllerTest extends ApplicationTest {
     MainWindowController controller;
     CurrentTownJsonDownloadService currentTownService;
     DestinationTownJsonDownloadService destinationTownService;
+    //JsonDownloadService service;
 
     @Start
     public void start(Stage stage) throws Exception{
@@ -34,8 +35,7 @@ class MainWindowControllerTest extends ApplicationTest {
         factory = mock(ViewFactory.class);
         currentTownService = mock(CurrentTownJsonDownloadService.class);
         destinationTownService = mock(DestinationTownJsonDownloadService.class);
-        controller = new MainWindowController(manager, factory, currentTownService,
-                destinationTownService);
+        controller = new MainWindowController(manager, factory, currentTownService, destinationTownService);
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/mainWindow.fxml"));
         loader.setController(controller);
         Parent mainNode = loader.load();

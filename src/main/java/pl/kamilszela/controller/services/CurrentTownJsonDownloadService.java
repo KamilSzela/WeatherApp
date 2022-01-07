@@ -7,8 +7,4 @@ public class CurrentTownJsonDownloadService extends JsonDownloadService{
     public CurrentTownJsonDownloadService(AppManager appManager) {
         super(appManager);
     }
-
-    public void setForecastInAppManager(){
-        appManager.setCurrentTownForecastJson(downloadedJson);
-    }
 }

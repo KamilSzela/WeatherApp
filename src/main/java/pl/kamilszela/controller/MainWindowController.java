@@ -30,6 +30,7 @@ public class MainWindowController extends BaseController implements Initializabl
 
     private JsonDownloadService currentTownJsonDownloadService;
     private JsonDownloadService destinationTownJsonDownloadService;
+   // private JsonDownloadService service;
 
     @FXML
     private VBox sourceTownForecastField;
@@ -47,7 +48,8 @@ public class MainWindowController extends BaseController implements Initializabl
     private Label errorLabel;
 
     public MainWindowController(AppManager appManager, ViewFactory viewFactory,
-                                JsonDownloadService currentTownService, JsonDownloadService destinationTownService){
+                                CurrentTownJsonDownloadService currentTownService,
+                                DestinationTownJsonDownloadService destinationTownService){
         super(appManager, viewFactory);
         this.currentTownJsonDownloadService = currentTownService;
         this.destinationTownJsonDownloadService = destinationTownService;
@@ -72,24 +74,23 @@ public class MainWindowController extends BaseController implements Initializabl
     public void downloadCurrentTownForecast() throws UnsupportedEncodingException {
         String cityName = sourceTown.getText();
         String cityNameForDownload = new String(cityName.getBytes(StandardCharsets.UTF_8));
-        downloadForecast(currentTownJsonDownloadService, cityNameForDownload);
+        downloadForecast(currentTownJsonDownloadService, cityNameForDownload, CityType.CURRENT_CITY);
     }
     public void downloadDestinationTownForecast() throws UnsupportedEncodingException {
         String cityName = destinationTown.getText();
         String cityNameForDownload = new String(cityName.getBytes(StandardCharsets.UTF_8));
-        downloadForecast(destinationTownJsonDownloadService, cityNameForDownload);
+        downloadForecast(destinationTownJsonDownloadService, cityNameForDownload, CityType.DESTINATION_CITY);
     }
-    public void downloadForecast(JsonDownloadService service, String cityName){
+    public void downloadForecast(JsonDownloadService service, String cityName, CityType typeOfCityType){
         service.setCityName(cityName);
         service.setAppManager(appManager);
         service.restart();
 
         service.setOnSucceeded(e -> {
-            JsonDownloadResult result = service.getValue();
-            switch (result){
+            APICallResult result = service.getValue();
+            switch (result.getResult()){
                 case SUCCESS:
-                    service.setForecastInAppManager();
-                    appManager.setParametersInWeatherCityModel();
+                    appManager.setParametersInWeatherCityModel(result.getDownloadedJSON(), typeOfCityType);
                     this.errorLabel.setText("");
                     viewFactory.prepareForecastPanel(destinationForecastField, sourceTownForecastField);
                     break;
