@@ -4,14 +4,13 @@ public enum ColorTheme {
     LIGHT,
     DARK;
 
-    public static String getStylesheetPath(ColorTheme colorTheme){
-        switch (colorTheme){
-            case LIGHT:
-                return "/css/themeLight.css";
+    public static String getStylesheetPath(ColorTheme colorTheme) {
+        switch (colorTheme) {
             case DARK:
                 return "/css/themeDark.css";
+            case LIGHT:
             default:
-                return null;
+                return "/css/themeLight.css";
         }
     }
 }

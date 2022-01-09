@@ -1,21 +1,26 @@
 package pl.kamilszela.controller;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pl.kamilszela.AppManager;
-import pl.kamilszela.model.WeatherCityModel;
+import pl.kamilszela.model.OneDayWeatherCityModel;
 import pl.kamilszela.view.ViewFactory;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
+import java.time.ZoneOffset;
 import java.util.List;
-import java.util.ResourceBundle;
 
-public class OneDayForecastBoxController extends BaseController implements Initializable {
+public class OneDayForecastBoxController extends BaseController {
+
+    public static final int NUMBER_OF_RECORDS_FOR_ONE_DAY = 8;
+    public static final int MAX_NUMBER_OF_FORECAST_BOXES_IN_ONE_COLUMN = 4;
+    public static final int NUMBER_OF_LAST_RECORD_IN_FORECAST_LIST = 39;
+    public static final String ERROR_TEXT_RECORD_OUT_OF_BONDS_POSITION = "Numer rekordu w liście nie może byc ujemny.";
+    public static final String ERROR_TEXT_INCOMPATIBLE_CHARSET = "System nie wspiera podanych znaków. Spróbuj użyć standardowego alfabetu " +
+            "łacińskiego";
 
     public OneDayForecastBoxController(AppManager appManager, ViewFactory viewFactory) {
         super(appManager, viewFactory);
@@ -27,48 +32,53 @@ public class OneDayForecastBoxController extends BaseController implements Initi
     private VBox columnRight;
     @FXML
     private Label cityDataLabel;
+
     @FXML
     void closeForecastForOneDay() {
         Stage activeStage = (Stage) this.columnLeft.getScene().getWindow();
         activeStage.close();
     }
 
-    private void fillColumnsWithForecastData(List<WeatherCityModel> list, int k, int counter){
+    private void fillColumnsWithForecastData(List<OneDayWeatherCityModel> listOfForecastRecords, int numberOfSingleRecord, int counter) {
 
-        String cityName = list.get(k).getCityData().get("name").toString();
-        String countryCode = list.get(k).getCityData().get("country").toString();
-        String dateForDisplay = list.get(k).getDt_txt().substring(0,10);
-        String timeZoneSeconds = list.get(k).getCityData().get("timezone").toString();
-        String timeZone = appManager.prepareTimeOfTimeZone(timeZoneSeconds);
-        String fullLabelString = cityName + ", " + countryCode + "; " + dateForDisplay + ", strefa czasowa: " + timeZone;
+        String cityName = listOfForecastRecords.get(numberOfSingleRecord).getCityData().get("name").toString();
+        String countryCode = listOfForecastRecords.get(numberOfSingleRecord).getCityData().get("country").toString();
+        String dateForDisplay = listOfForecastRecords.get(numberOfSingleRecord).getDt_txt().substring(0, 10);
+        String timeZoneSeconds = listOfForecastRecords.get(numberOfSingleRecord).getCityData().get("timezone").toString();
+        Double seconds = Double.parseDouble(timeZoneSeconds);
+        ZoneOffset offset = ZoneOffset.ofTotalSeconds(seconds.intValue());
+        String timeZone = offset.toString();
+        String fullLabelString =
+                cityName + ", " + countryCode + "; " + dateForDisplay + ", strefa czasowa: " + timeZone + " GMT";
         String fullLabelWithCharset = "";
         try {
             fullLabelWithCharset = new String(fullLabelString.getBytes("UTF-8"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-            cityDataLabel.setText("System nie wspiera podanych znaków. Spróbuj użyć standardowego alfabetu " +
-                    "łacińskiego");
+            cityDataLabel.setText(ERROR_TEXT_INCOMPATIBLE_CHARSET);
         }
         cityDataLabel.setText(fullLabelWithCharset);
         cityDataLabel.setTooltip(new Tooltip(fullLabelWithCharset));
-        if(counter > 4){
-            viewFactory.showForecastInVBox(k, list, columnRight, false);
+        if (counter > MAX_NUMBER_OF_FORECAST_BOXES_IN_ONE_COLUMN) {
+            viewFactory.showForecastInVBox(numberOfSingleRecord, listOfForecastRecords, columnRight, false);
         } else {
-            viewFactory.showForecastInVBox(k, list, columnLeft, false);
+            viewFactory.showForecastInVBox(numberOfSingleRecord, listOfForecastRecords, columnLeft, false);
         }
     }
 
-    public void prepareForecastDataForOneDay(List<WeatherCityModel> list, int i){
-        String dateTime = list.get(i).getDt_txt();
-        String date = dateTime.substring(0,10);
+    public void prepareForecastDataForOneDay(List<OneDayWeatherCityModel> listOfForecastRecords, int numberPositionOfElementRecord) {
+
+        if (numberPositionOfElementRecord == NUMBER_OF_LAST_RECORD_IN_FORECAST_LIST) {
+            numberPositionOfElementRecord++;
+        }
+        int positionNumberOfFirstRecord = numberPositionOfElementRecord - NUMBER_OF_RECORDS_FOR_ONE_DAY;
+        if (positionNumberOfFirstRecord < 0) {
+            throw new IllegalArgumentException(ERROR_TEXT_RECORD_OUT_OF_BONDS_POSITION);
+        }
         int counter = 0;
-        for(int k = 0; k < list.size(); k++){
-            String dateOFSingleRecord = list.get(k).getDt_txt();
-            String dateForComparison = dateOFSingleRecord.substring(0,10);
-            if(date.equals(dateForComparison)){
-                counter++;
-                fillColumnsWithForecastData(list, k, counter);
-            }
+        for (int k = positionNumberOfFirstRecord; k < numberPositionOfElementRecord; k++) {
+            counter++;
+            fillColumnsWithForecastData(listOfForecastRecords, k, counter);
         }
     }
 
@@ -84,8 +94,4 @@ public class OneDayForecastBoxController extends BaseController implements Initi
         return cityDataLabel;
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
 }

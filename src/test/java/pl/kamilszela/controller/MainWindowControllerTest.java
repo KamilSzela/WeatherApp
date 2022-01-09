@@ -6,13 +6,12 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
-import org.testfx.api.FxAssert;
-import org.testfx.api.FxService;
-import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.framework.junit5.Start;
 import org.testfx.util.WaitForAsyncUtils;
 import pl.kamilszela.AppManager;
+import pl.kamilszela.controller.services.CurrentTownJsonDownloadService;
+import pl.kamilszela.controller.services.DestinationTownJsonDownloadService;
 import pl.kamilszela.view.ColorTheme;
 import pl.kamilszela.view.ViewFactory;
 
@@ -26,14 +25,16 @@ class MainWindowControllerTest extends ApplicationTest {
     AppManager manager;
     ViewFactory factory;
     MainWindowController controller;
+    CurrentTownJsonDownloadService currentTownService;
+    DestinationTownJsonDownloadService destinationTownService;
 
     @Start
     public void start(Stage stage) throws Exception{
-//        manager = new AppManager();
-//        factory = new ViewFactory(manager);
         manager = mock(AppManager.class);
         factory = mock(ViewFactory.class);
-        controller = new MainWindowController(manager, factory);
+        currentTownService = mock(CurrentTownJsonDownloadService.class);
+        destinationTownService = mock(DestinationTownJsonDownloadService.class);
+        controller = new MainWindowController(manager, factory, currentTownService, destinationTownService);
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/mainWindow.fxml"));
         loader.setController(controller);
         Parent mainNode = loader.load();
@@ -47,37 +48,34 @@ class MainWindowControllerTest extends ApplicationTest {
         //given
         controller.getSourceTown().clear();
         //when
-        clickOn(".button", MouseButton.PRIMARY);
+        clickOnMainButtonForDownloadForecast();
         //then
         assertThat(controller.getErrorLabel().getText(), equalTo("Proszę wpisać obie nazwy miast w odpowiednie pola"));
     }
+
+    private void clickOnMainButtonForDownloadForecast() {
+        clickOn(".button", MouseButton.PRIMARY);
+    }
+
     @Test
     void shouldSetErrorLabelWhenBothFieldsAreEmpty(){
         //given
         controller.getSourceTown().clear();
         controller.getDestinationTown().clear();
         //when
-        clickOn(".button", MouseButton.PRIMARY);
+        clickOnMainButtonForDownloadForecast();
         //then
         assertThat(controller.getErrorLabel().getText(), equalTo("Proszę wpisać obie nazwy miast w odpowiednie pola"));
     }
     @Test
-    void afterDownloadingForecastFromExternalSiteDataShouldBeSetInAppManager() {
+    void afterClickOnMainButtonBothServicesShouldBeRestarted() {
         //given
         //when
-        clickOn(".button", MouseButton.PRIMARY);
+        clickOnMainButtonForDownloadForecast();
         sleep(500);
         //then
-        verify(manager, times(2)).setParametersInWeatherCityModel();
-    }
-    @Test
-    void afterDownloadingForecastDataForecastBoxesShouldBeLoadedToVBoxes(){
-        //given
-        //when
-        clickOn(".button", MouseButton.PRIMARY);
-        sleep(500);
-        //then
-        verify(factory, times(2)).prepareForecastPanel(controller.getDestinationForcastField(), controller.getSourceTownForcastField());
+        verify(currentTownService).restart();
+        verify(destinationTownService).restart();
     }
     @Test
     void clickingOnDarkThemeMenuItemShouldSetDarkTheme(){

@@ -4,8 +4,8 @@ import pl.kamilszela.AppManager;
 import pl.kamilszela.view.ViewFactory;
 
 public abstract class BaseController {
-    public AppManager appManager;
-    public ViewFactory viewFactory;
+    protected AppManager appManager;
+    protected ViewFactory viewFactory;
 
     public BaseController(AppManager appManager, ViewFactory viewFactory) {
         this.appManager = appManager;

@@ -7,12 +7,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
-import org.testfx.api.FxAssert;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.framework.junit5.Start;
-import org.testfx.util.WaitForAsyncUtils;
 import pl.kamilszela.AppManager;
-import pl.kamilszela.model.WeatherCityModel;
+import pl.kamilszela.model.OneDayWeatherCityModel;
 import pl.kamilszela.view.ViewFactory;
 
 import java.sql.Timestamp;
@@ -66,30 +64,25 @@ class ForecastBoxControllerTest extends ApplicationTest {
             }
         });
     }
-    private List<WeatherCityModel> prepareExampleListForSetUpInForecastBox(){
-        WeatherCityModel model = new WeatherCityModel();
+    private List<OneDayWeatherCityModel> prepareExampleListForSetUpInForecastBox(){
+
         Map<String, Double> main = new HashMap<>();
         main.put("temp", 20.06);
         main.put("pressure", 1014.0);
         main.put("humidity", 50.0);
-        model.setMain(main);
         Map<String, String> weather = new HashMap<>();
         weather.put("icon", "01n");
-        model.setWeather(weather);
         Map<String, Double> wind = new HashMap<>();
         wind.put("speed", 3.63);
-        model.setWind(wind);
         String dt_txt = "2021-06-01 21:00:00";
-        model.setDt_txt(dt_txt);
         Map<String,Object> cityData = new HashMap<>();
         cityData.put("name", "London");
         cityData.put("country", "GB");
         cityData.put("timezone", 3600);
-        model.setCityData(cityData);
         Long timestampLong = Long.valueOf("1622581200000");
         Timestamp timestamp = new Timestamp(timestampLong);
-        model.setTimestamp(timestamp);
-        List<WeatherCityModel> list = FXCollections.observableArrayList();
+        List<OneDayWeatherCityModel> list = FXCollections.observableArrayList();
+        OneDayWeatherCityModel model = new OneDayWeatherCityModel(main, weather, wind, dt_txt, cityData, timestamp);
         list.add(model);
         return list;
     }

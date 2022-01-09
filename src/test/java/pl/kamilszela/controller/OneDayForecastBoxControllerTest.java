@@ -4,7 +4,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -22,22 +21,23 @@ import java.util.stream.Collectors;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class OneDayForecastBoxControllerTest extends ApplicationTest {
 
+    public static final int NUMBER_OF_MINIMAL_RECORDS_FOR_ONE_DAY_FORECAST = 8;
     AppManager manager;
     ViewFactory factory;
     OneDayForecastBoxController controller;
 
     @Start
-    public void start(Stage stage) throws Exception{
+    public void start(Stage stage) throws Exception {
         manager = new AppManager();
         factory = new ViewFactory(manager);
         controller = new OneDayForecastBoxController(manager, factory);
-        setSampleJsonInAppManager(manager);
-        manager.setParametersInWeatherCityModel();
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/oneDayForeCastBox.fxml"));
+        manager.setParametersInWeatherCityModel(loadSampleJsonData(), CityType.CURRENT_CITY);
+        manager.setParametersInWeatherCityModel(loadSampleJsonData(), CityType.DESTINATION_CITY);
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/oneDayForecastBox.fxml"));
         loader.setController(controller);
         Parent mainNode = loader.load();
 
@@ -46,12 +46,11 @@ class OneDayForecastBoxControllerTest extends ApplicationTest {
         stage.toFront();
     }
 
-    private void setSampleJsonInAppManager(AppManager manager) throws IOException {
+    private String loadSampleJsonData(){
         InputStream stream = OneDayForecastBoxControllerTest.class.getResourceAsStream("/jsonWeatherForecastExample" +
                 ".txt");
         String result = new BufferedReader(new InputStreamReader(stream)).lines().collect(Collectors.joining());
-        manager.setCurrentTownForcastJson(result);
-        manager.setDestinationTownForecastJson(result);
+        return result;
     }
 
     @Test
@@ -61,11 +60,25 @@ class OneDayForecastBoxControllerTest extends ApplicationTest {
             @Override
             public void run() {
                 //when
-                controller.prepareForecastDataForOneDay(manager.getCurrentCityWeatherModelList(), 3);
+                controller.prepareForecastDataForOneDay(manager.getCurrentCityWeatherModelList(), NUMBER_OF_MINIMAL_RECORDS_FOR_ONE_DAY_FORECAST);
                 WaitForAsyncUtils.waitForFxEvents();
                 //then
                 assertThat(controller.getColumnLeft().getChildren().size(), equalTo(4));
                 assertThat(controller.getColumnRight().getChildren().size(), equalTo(4));
+            }
+        });
+    }
+    @Test
+    void shouldThrowIllegalArgumentExceptionWhenPositionOfElementRecordIsBelowEight(){
+        //given
+        //when
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                //then
+                assertThrows(IllegalArgumentException.class,
+                        () -> controller.prepareForecastDataForOneDay(manager.getCurrentCityWeatherModelList(),
+                                NUMBER_OF_MINIMAL_RECORDS_FOR_ONE_DAY_FORECAST - 1));
             }
         });
     }
@@ -76,7 +89,7 @@ class OneDayForecastBoxControllerTest extends ApplicationTest {
             @Override
             public void run() {
                 //when
-                controller.prepareForecastDataForOneDay(manager.getCurrentCityWeatherModelList(), 3);
+                controller.prepareForecastDataForOneDay(manager.getCurrentCityWeatherModelList(), NUMBER_OF_MINIMAL_RECORDS_FOR_ONE_DAY_FORECAST);
                 WaitForAsyncUtils.waitForFxEvents();
                 //then
                 assertThat(controller.getColumnRight().getChildren().get(0).getOnMouseClicked(), nullValue());
@@ -90,13 +103,14 @@ class OneDayForecastBoxControllerTest extends ApplicationTest {
             @Override
             public void run() {
                 //when
-                controller.prepareForecastDataForOneDay(manager.getCurrentCityWeatherModelList(), 3);
+                controller.prepareForecastDataForOneDay(manager.getCurrentCityWeatherModelList(), NUMBER_OF_MINIMAL_RECORDS_FOR_ONE_DAY_FORECAST);
                 WaitForAsyncUtils.waitForFxEvents();
                 String townName = manager.getCurrentCityWeatherModelList().get(3).getCityData().get("name").toString();
                 String countryCode =
                         manager.getCurrentCityWeatherModelList().get(3).getCityData().get("country").toString();
                 String date = manager.getCurrentCityWeatherModelList().get(3).getDt_txt().substring(0,10);
-                String expectedLabelContent = townName + ", " + countryCode + "; " + date + ", strefa czasowa: GMT+2";
+                String expectedLabelContent = townName + ", " + countryCode + "; " + date + ", strefa czasowa: +02:00" +
+                        " GMT";
                 //then
                 assertThat(controller.getCityDataLabel().getText(), equalTo(expectedLabelContent));
             }
