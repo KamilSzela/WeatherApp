@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import javafx.collections.FXCollections;
 import pl.kamilszela.controller.CityType;
-import pl.kamilszela.controller.ForecastBoxController;
 import pl.kamilszela.model.ForecastListElement;
 import pl.kamilszela.model.FullWeatherCityModel;
 import pl.kamilszela.model.OneDayWeatherCityModel;
@@ -16,34 +15,19 @@ import java.util.Map;
 public class AppManager {
 
     private static final Gson GSON = new Gson();
-    private String currentTownForecastJson;
-    private String destinationTownForecastJson;
+
     public List<OneDayWeatherCityModel> currentCityWeatherModelList = FXCollections.observableArrayList();
     public List<OneDayWeatherCityModel> destinationCityWeatherModelList = FXCollections.observableArrayList();
 
 
-    public String getCurrentTownForecastJson() {
-        return currentTownForecastJson;
-    }
-
-    public void setCurrentTownForecastJson(String currentTownForcastJson) {
-        this.currentTownForecastJson = currentTownForcastJson;
-    }
-
-    public String getDestinationTownForecastJson() {
-        return destinationTownForecastJson;
-    }
-
-    public void setDestinationTownForecastJson(String destinationTownForecastJson) {
-        this.destinationTownForecastJson = destinationTownForecastJson;
-    }
-
     public void setParametersInWeatherCityModel(String downloadedJson, CityType typeOfCity) {
+
         if (currentCityWeatherModelList.size() > 0 && destinationCityWeatherModelList.size() > 0) {
             clearListsOfWeatherForecast();
         }
-        if(downloadedJson != null){
-            if(downloadedJson.equals("")){
+
+        if (downloadedJson != null) {
+            if (downloadedJson.equals("")) {
                 throw new IllegalArgumentException("JSON data empty");
             } else {
                 switch (typeOfCity) {
@@ -65,8 +49,7 @@ public class AppManager {
         List<ForecastListElement> forecastListFor5Days = fullCityForecast.getList();
         Map<String, Object> cityData = fullCityForecast.getCity();
 
-        for(ForecastListElement element: forecastListFor5Days){
-
+        for (ForecastListElement element : forecastListFor5Days) {
             long timeStampDouble = element.getDt() * 1000;
             Timestamp dateTimeStamp = new Timestamp(timeStampDouble);
             OneDayWeatherCityModel model = new OneDayWeatherCityModel(element.getMain(),
@@ -77,15 +60,9 @@ public class AppManager {
                     dateTimeStamp);
             list.add(model);
         }
-
     }
 
-    public void clearJsonForecast() {
-        currentTownForecastJson = null;
-        destinationTownForecastJson = null;
-    }
-
-    private void clearListsOfWeatherForecast() {
+    public void clearListsOfWeatherForecast() {
         currentCityWeatherModelList.clear();
         destinationCityWeatherModelList.clear();
     }

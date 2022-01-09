@@ -43,15 +43,13 @@ public class ForecastBoxController extends BaseController implements Initializab
         super(appManager, viewFactory);
     }
 
-    public void prepareForecastBox(int forecastElementNumber, List<OneDayWeatherCityModel> list){
+    public void prepareForecastBox(int forecastElementNumber, List<OneDayWeatherCityModel> list) {
         Instant instant = list.get(forecastElementNumber).getTimestamp().toInstant();
         String secondsOffset = list.get(forecastElementNumber).getCityData().get("timezone").toString();
         Double secondsOffsetDouble = Double.parseDouble(secondsOffset);
         ZoneOffset offset = ZoneOffset.ofTotalSeconds(secondsOffsetDouble.intValue());
         ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(instant, ZoneId.ofOffset("GMT", offset));
-        //String hoursOffset = appManager.prepareTimeOfTimeZone(secondsOffset);
-        //ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(instant, ZoneId.of(hoursOffset));
-        dateLabel.setText(zonedDateTime.toString().substring(0,10) + " " + zonedDateTime.getHour() + ":00");
+        dateLabel.setText(zonedDateTime.toString().substring(0, 10) + " " + zonedDateTime.getHour() + ":00");
         Double temperature = list.get(forecastElementNumber).getMain().get("temp");
         temperatureLabel.setText(temperature.toString() + " " + DEGREE_SIGN + "C");
         Double pressure = list.get(forecastElementNumber).getMain().get("pressure");

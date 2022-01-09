@@ -27,7 +27,6 @@ class MainWindowControllerTest extends ApplicationTest {
     MainWindowController controller;
     CurrentTownJsonDownloadService currentTownService;
     DestinationTownJsonDownloadService destinationTownService;
-    //JsonDownloadService service;
 
     @Start
     public void start(Stage stage) throws Exception{
@@ -49,17 +48,22 @@ class MainWindowControllerTest extends ApplicationTest {
         //given
         controller.getSourceTown().clear();
         //when
-        clickOn(".button", MouseButton.PRIMARY);
+        clickOnMainButtonForDownloadForecast();
         //then
         assertThat(controller.getErrorLabel().getText(), equalTo("Proszę wpisać obie nazwy miast w odpowiednie pola"));
     }
+
+    private void clickOnMainButtonForDownloadForecast() {
+        clickOn(".button", MouseButton.PRIMARY);
+    }
+
     @Test
     void shouldSetErrorLabelWhenBothFieldsAreEmpty(){
         //given
         controller.getSourceTown().clear();
         controller.getDestinationTown().clear();
         //when
-        clickOn(".button", MouseButton.PRIMARY);
+        clickOnMainButtonForDownloadForecast();
         //then
         assertThat(controller.getErrorLabel().getText(), equalTo("Proszę wpisać obie nazwy miast w odpowiednie pola"));
     }
@@ -67,7 +71,7 @@ class MainWindowControllerTest extends ApplicationTest {
     void afterClickOnMainButtonBothServicesShouldBeRestarted() {
         //given
         //when
-        clickOn(".button", MouseButton.PRIMARY);
+        clickOnMainButtonForDownloadForecast();
         sleep(500);
         //then
         verify(currentTownService).restart();

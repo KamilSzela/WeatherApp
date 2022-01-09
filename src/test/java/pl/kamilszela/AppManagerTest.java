@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class AppManagerTest {
 
     @Test
-    void passedJsonDataShouldBeConvertedToTheList(){
+    void passedJsonDataShouldBeConvertedToTheList() {
         //given
         AppManager appManager = new AppManager();
         //when
@@ -35,28 +35,28 @@ class AppManagerTest {
     }
 
     @Test
-    void afterCallingClearJsonDataInAppManagerJsonStringsShouldBeNull(){
-        //given
-        AppManager appManager = new AppManager();
-        appManager.setCurrentTownForecastJson(loadSampleJsonData());
-        appManager.setDestinationTownForecastJson(loadSampleJsonData());
-        //when
-        appManager.clearJsonForecast();
-        //then
-        assertNull(appManager.getCurrentTownForecastJson());
-        assertNull(appManager.getDestinationTownForecastJson());
-    }
-    @Test
-    void shouldThrowIllegalArgumentExceptionWhenPassingEmptyJsonString(){
+    void shouldThrowIllegalArgumentExceptionWhenPassingEmptyJsonString() {
         //given
         AppManager appManager = new AppManager();
         //when
-        appManager.setDestinationTownForecastJson("");
-        appManager.setCurrentTownForecastJson("");
         //then
         assertThrows(IllegalArgumentException.class, () -> appManager.setParametersInWeatherCityModel("", CityType.DESTINATION_CITY));
     }
-    private String loadSampleJsonData(){
+
+    @Test
+    void callingClearForecastModelListsShouldLeaveThemEmpty() {
+        //given
+        AppManager manager = new AppManager();
+        //when
+        manager.setParametersInWeatherCityModel(loadSampleJsonData(), CityType.CURRENT_CITY);
+        manager.setParametersInWeatherCityModel(loadSampleJsonData(), CityType.DESTINATION_CITY);
+        manager.clearListsOfWeatherForecast();
+        //then
+        assertThat(manager.getCurrentCityWeatherModelList().size(), equalTo(0));
+        assertThat(manager.getDestinationCityWeatherModelList().size(), equalTo(0));
+
+    }
+    private String loadSampleJsonData() {
         InputStream stream = AppManager.class.getResourceAsStream("/jsonWeatherForecastExample" +
                 ".txt");
         String result = new BufferedReader(new InputStreamReader(stream)).lines().collect(Collectors.joining());

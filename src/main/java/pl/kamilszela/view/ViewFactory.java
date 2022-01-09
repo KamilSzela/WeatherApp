@@ -35,8 +35,8 @@ public class ViewFactory {
 
     public void showMainWindow() {
         BaseController controller = new MainWindowController(appManager, this,
-                new CurrentTownJsonDownloadService(appManager),
-                new DestinationTownJsonDownloadService(appManager));
+                new CurrentTownJsonDownloadService(),
+                new DestinationTownJsonDownloadService());
         String fileName = MAIN_WINDOW_FXML_FILE_NAME;
 
         Parent parent = loadFXMLFile(controller, fileName);
@@ -47,15 +47,15 @@ public class ViewFactory {
     public void prepareForecastPanel(Pane destinationForecastField, Pane sourceTownForecastField) {
         int counter = 0;
         int size = appManager.currentCityWeatherModelList.size();
-        if(appManager.currentCityWeatherModelList.size() > 0 && appManager.destinationCityWeatherModelList.size() > 0){
-            for(int i = 0; i < size; i++){
-                if(counter == NUMBER_OF_FORECAST_POINTS_FOR_ONE_DAY){
-                    showForecastInVBox(i,  appManager.destinationCityWeatherModelList, destinationForecastField, true);
-                    showForecastInVBox(i,  appManager.currentCityWeatherModelList, sourceTownForecastField, true);
+        if (appManager.currentCityWeatherModelList.size() > 0 && appManager.destinationCityWeatherModelList.size() > 0) {
+            for (int i = 0; i < size; i++) {
+                if (counter == NUMBER_OF_FORECAST_POINTS_FOR_ONE_DAY) {
+                    showForecastInVBox(i, appManager.destinationCityWeatherModelList, destinationForecastField, true);
+                    showForecastInVBox(i, appManager.currentCityWeatherModelList, sourceTownForecastField, true);
                     counter = 0;
                 }
                 counter++;
-                if(i == SECOND_LAST_ELEMENT_IN_FORECAST_LIST){
+                if (i == SECOND_LAST_ELEMENT_IN_FORECAST_LIST) {
                     counter++;
                 }
             }
@@ -67,9 +67,9 @@ public class ViewFactory {
         ForecastBoxController controller = new ForecastBoxController(this.appManager, this);
         String fileName = FORECAST_BOX_FXML;
         Parent parent = loadFXMLFile(controller, fileName);
-        controller.prepareForecastBox(listPositionNumberOfForecastElement,list);
-        if(clickForOneDayForecast){
-            parent.setOnMouseClicked(e->{
+        controller.prepareForecastBox(listPositionNumberOfForecastElement, list);
+        if (clickForOneDayForecast) {
+            parent.setOnMouseClicked(e -> {
                 showForecastForOneDay(list, listPositionNumberOfForecastElement);
             });
         }
@@ -99,7 +99,7 @@ public class ViewFactory {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource(fileName));
         loader.setController(controller);
         Parent parent = null;
-        try{
+        try {
             parent = loader.load();
         } catch (IOException ioException) {
             ioException.printStackTrace();

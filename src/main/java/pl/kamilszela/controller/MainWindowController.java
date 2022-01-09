@@ -30,7 +30,6 @@ public class MainWindowController extends BaseController implements Initializabl
 
     private JsonDownloadService currentTownJsonDownloadService;
     private JsonDownloadService destinationTownJsonDownloadService;
-   // private JsonDownloadService service;
 
     @FXML
     private VBox sourceTownForecastField;
@@ -49,7 +48,7 @@ public class MainWindowController extends BaseController implements Initializabl
 
     public MainWindowController(AppManager appManager, ViewFactory viewFactory,
                                 CurrentTownJsonDownloadService currentTownService,
-                                DestinationTownJsonDownloadService destinationTownService){
+                                DestinationTownJsonDownloadService destinationTownService) {
         super(appManager, viewFactory);
         this.currentTownJsonDownloadService = currentTownService;
         this.destinationTownJsonDownloadService = destinationTownService;
@@ -57,10 +56,9 @@ public class MainWindowController extends BaseController implements Initializabl
 
     @FXML
     public void generateForecastAction() {
-        if(!sourceTown.getText().equals("") && !destinationTown.getText().equals("")){
+        if (!sourceTown.getText().equals("") && !destinationTown.getText().equals("")) {
             clearForecastFields();
-            appManager.clearJsonForecast();
-            try{
+            try {
                 downloadCurrentTownForecast();
                 downloadDestinationTownForecast();
             } catch (UnsupportedEncodingException e) {
@@ -76,19 +74,20 @@ public class MainWindowController extends BaseController implements Initializabl
         String cityNameForDownload = new String(cityName.getBytes(StandardCharsets.UTF_8));
         downloadForecast(currentTownJsonDownloadService, cityNameForDownload, CityType.CURRENT_CITY);
     }
+
     public void downloadDestinationTownForecast() throws UnsupportedEncodingException {
         String cityName = destinationTown.getText();
         String cityNameForDownload = new String(cityName.getBytes(StandardCharsets.UTF_8));
         downloadForecast(destinationTownJsonDownloadService, cityNameForDownload, CityType.DESTINATION_CITY);
     }
-    public void downloadForecast(JsonDownloadService service, String cityName, CityType typeOfCityType){
+
+    public void downloadForecast(JsonDownloadService service, String cityName, CityType typeOfCityType) {
         service.setCityName(cityName);
-        service.setAppManager(appManager);
         service.restart();
 
         service.setOnSucceeded(e -> {
             APICallResult result = service.getValue();
-            switch (result.getResult()){
+            switch (result.getResult()) {
                 case SUCCESS:
                     appManager.setParametersInWeatherCityModel(result.getDownloadedJSON(), typeOfCityType);
                     this.errorLabel.setText("");
@@ -104,6 +103,7 @@ public class MainWindowController extends BaseController implements Initializabl
         });
 
     }
+
     @FXML
     void setDarkTheme() {
         viewFactory.setColorTheme(ColorTheme.DARK);
@@ -115,6 +115,7 @@ public class MainWindowController extends BaseController implements Initializabl
         viewFactory.setColorTheme(ColorTheme.LIGHT);
         viewFactory.updateStyle(getScene());
     }
+
     @FXML
     void closeApp() {
         Platform.exit();
@@ -134,7 +135,7 @@ public class MainWindowController extends BaseController implements Initializabl
     }
 
     private void setUpForecastFields() {
-        sourceTown.setOnMouseClicked(e ->{
+        sourceTown.setOnMouseClicked(e -> {
             clearForecastFields();
         });
         destinationTown.setOnMouseClicked(e -> {
@@ -146,7 +147,8 @@ public class MainWindowController extends BaseController implements Initializabl
         destinationForecastField.getChildren().clear();
         sourceTownForecastField.getChildren().clear();
     }
-    private Scene getScene(){
+
+    private Scene getScene() {
         return this.errorLabel.getScene();
     }
 
